@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/tools"
-    android:padding="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
   <android.support.v7.widget.CardView
       android:id="@+id/list_item_cardview"
       android:layout_width="match_parent"
-      android:layout_height="200dp"
+      android:layout_height="250dp"
       android:layout_gravity="center"
+      android:clickable="true"
+      android:focusable="true"
+      android:foreground="?android:attr/selectableItemBackground"
       app:cardUseCompatPadding="true"
       card_view:cardCornerRadius="4dp"
-      card_view:elevation="10dp"
-      android:focusable="true"
-      android:clickable="true"
-      android:foreground="?android:attr/selectableItemBackground">
+      card_view:elevation="10dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -39,11 +39,11 @@
           android:id="@+id/list_item_title"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="Hack the North"
           android:layout_alignParentTop="true"
-          android:layout_toRightOf="@id/list_item_icon"
-          android:layout_toEndOf="@id/list_item_icon"
           android:layout_marginTop="18dp"
+          android:layout_toEndOf="@id/list_item_icon"
+          android:layout_toRightOf="@id/list_item_icon"
+          android:text="Hack the North"
           android:textSize="20sp"
           android:textStyle="bold"
           />
@@ -53,21 +53,21 @@
 
       <LinearLayout
           android:id="@+id/list_item_date_linearlayout"
-          android:layout_width="200dp"
-          android:layout_height="wrap_content"
-          android:layout_toRightOf="@id/list_item_icon"
-          android:layout_toEndOf="@id/list_item_icon"
+          android:layout_width="240dp"
+          android:layout_height="40dp"
           android:layout_below="@id/list_item_title"
-          android:orientation="horizontal"
           android:layout_marginTop="6dp"
-          android:gravity="center_vertical">
+          android:layout_toEndOf="@id/list_item_icon"
+          android:layout_toRightOf="@id/list_item_icon"
+          android:gravity="center_vertical"
+          android:orientation="horizontal">
 
         <TextView
             android:id="@+id/list_item_start_date"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text= "4 August"
-
+            android:gravity="center"
+            android:text="4 August"
             android:textSize="17sp"
             android:textStyle="bold"
             />
@@ -75,22 +75,22 @@
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/ic_right_arrow"
-            android:layout_marginLeft="4dp"/>
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:src="@drawable/ic_right_arrow"/>
 
 
         <TextView
             android:id="@+id/list_item_end_date"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text= "4 August"
-            android:layout_marginLeft="6dp"
+            android:gravity="center"
+            android:text="4 August"
             android:textSize="17sp"
             android:textStyle="bold"
             />
 
       </LinearLayout>
-
 
 
       <!--hackathon location-->
@@ -100,16 +100,16 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_below="@id/list_item_date_linearlayout"
-          android:layout_toRightOf="@id/list_item_icon"
           android:layout_toEndOf="@id/list_item_icon"
+          android:layout_toRightOf="@id/list_item_icon"
           android:orientation="horizontal">
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="In: "
             android:layout_marginTop="8dp"
+            android:text="In: "
             android:textSize="20sp"
             android:textStyle="bold"
             />
@@ -118,8 +118,8 @@
             android:id="@+id/list_item_host"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="MIT "
             android:layout_marginTop="8dp"
+            android:text="MIT "
             android:textSize="16sp"
             android:textStyle="bold"
             />
@@ -127,8 +127,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=",   "
             android:layout_marginTop="8dp"
+            android:text=",   "
             android:textSize="16sp"
             android:textStyle="bold"
             />
@@ -137,8 +137,8 @@
             android:id="@+id/list_item_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Canada ON "
             android:layout_marginTop="8dp"
+            android:text="Canada ON "
             android:textSize="16sp"
             android:textStyle="bold"
             />
@@ -147,19 +147,19 @@
       </LinearLayout>
 
 
-
       <!--Travel layout-->
 
       <LinearLayout
           android:id="@+id/list_item_travel_tick_linearlayout"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:orientation="horizontal"
-          android:gravity="center_vertical"
+          android:layout_alignLeft="@id/list_item_icon"
+          android:layout_alignStart="@id/list_item_icon"
           android:layout_below="@id/list_item_location_linearlayout"
-          android:layout_alignStart="@id/list_item_date_linearlayout"
-          android:layout_alignLeft="@id/list_item_date_linearlayout"
-          android:layout_marginTop="8dp">
+          android:layout_marginTop="8dp"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:padding="4dp">
 
         <ImageView
             android:id="@+id/list_item_travel_tick"
@@ -171,8 +171,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Travel"
             android:padding="8dp"
+            android:text="Travel"
             android:textSize="15dp"
             android:textStyle="bold"/>
 
@@ -183,12 +183,13 @@
       <LinearLayout
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:orientation="horizontal"
-          android:gravity="center_vertical"
+          android:layout_alignLeft="@id/list_item_icon"
+          android:layout_alignStart="@id/list_item_icon"
           android:layout_below="@id/list_item_travel_tick_linearlayout"
-          android:layout_alignStart="@id/list_item_date_linearlayout"
-          android:layout_alignLeft="@id/list_item_date_linearlayout"
-          android:layout_marginTop="8dp">
+          android:layout_marginTop="8dp"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:padding="4dp">
 
         <ImageView
             android:id="@+id/list_item_prize_tick"
@@ -200,36 +201,72 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Prizes"
             android:padding="8dp"
+            android:text="Prizes"
             android:textSize="15dp"
             android:textStyle="bold"/>
-
-
-
-
 
 
       </LinearLayout>
 
 
+      <LinearLayout
+          android:id="@+id/list_item_length_linearlayout"
+          android:layout_width="200dp"
+          android:layout_height="20dp"
+          android:layout_alignLeft="@id/list_item_location_linearlayout"
+          android:layout_alignStart="@id/list_item_location_linearlayout"
+          android:layout_below="@id/list_item_location_linearlayout"
+          android:layout_marginTop="18dp"
+          android:gravity="center">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Duration: "
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/list_item_length"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="36 hours "/>
+
+
+      </LinearLayout>
+
+
+      <LinearLayout
+          android:layout_width="200dp"
+          android:layout_height="20dp"
+          android:layout_alignLeft="@id/list_item_location_linearlayout"
+          android:layout_alignStart="@id/list_item_location_linearlayout"
+          android:layout_below="@id/list_item_length_linearlayout"
+          android:layout_marginTop="18dp"
+          android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="People: "
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/list_item_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1500+ "/>
+
+
+      </LinearLayout>
 
 
     </RelativeLayout>
 
 
-
-
-
   </android.support.v7.widget.CardView>
-
-
-
-
-
-
-
 
 
 </LinearLayout>

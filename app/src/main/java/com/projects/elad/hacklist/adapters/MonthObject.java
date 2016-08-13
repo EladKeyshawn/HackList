@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class MonthObject {
 
-  @SerializedName("directionOptions")
+  @SerializedName("January")
   @Expose
   private ArrayList<HacklistItem> hacklistItems = new ArrayList<>();
 

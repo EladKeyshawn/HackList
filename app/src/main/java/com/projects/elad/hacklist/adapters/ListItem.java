@@ -14,7 +14,17 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
 
   String title;
   String startDate;
+  String endDate;
+
+
+  String host;
+  String location;
+  String people;
+  String duration;
+
+
   boolean travel;
+  boolean prizes;
 
 
   public ListItem(String title, String startDate, boolean travel) {
@@ -27,12 +37,38 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
     return startDate;
   }
 
+  public String getEndDate() {
+    return endDate;
+  }
+
   public String getTitle() {
     return title;
   }
 
   public boolean getTravel() {
     return travel;
+  }
+
+
+  public String getHost() {
+    return host;
+  }
+
+  public String getLocation() {
+    return location;
+  }
+
+  public String getPeople() {
+    return people;
+  }
+
+  public String getDuration() {
+    return duration;
+  }
+
+
+  public boolean getPrizes() {
+    return prizes;
   }
 
 /*   Here starts fast adapter implementation   */
@@ -54,9 +90,18 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
 
     holder.title.setText(getTitle());
     holder.startDate.setText(getStartDate());
+    holder.endDate.setText(getEndDate());
+    holder.host.setText(getHost());
+    holder.location.setText(getLocation());
+    holder.people.setText(getPeople());
+    holder.duration.setText(getDuration());
 
-  if (!getTravel()) {
+
+    if (!getTravel()) {
       holder.travelIcon.setImageResource(R.drawable.ic_x_red);
+    }
+    if (!getPrizes()) {
+      holder.prizesIcon.setImageResource(R.drawable.ic_x_red);
     }
 
   }
@@ -68,8 +113,11 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
     TextView endDate;
     TextView host;
     TextView location;
+    TextView people;
+    TextView duration;
 
     ImageView travelIcon;
+    ImageView prizesIcon;
 
 
     public ViewHolder(View itemView) {
@@ -81,6 +129,11 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
       host = (TextView) itemView.findViewById(R.id.list_item_host);
       location = (TextView) itemView.findViewById(R.id.list_item_location);
       travelIcon = (ImageView) itemView.findViewById(R.id.list_item_travel_tick);
+      prizesIcon = (ImageView) itemView.findViewById(R.id.list_item_prize_tick);
+      people = (TextView) itemView.findViewById(R.id.list_item_size);
+      duration = (TextView) itemView.findViewById(R.id.list_item_length);
+
+
     }
   }
 

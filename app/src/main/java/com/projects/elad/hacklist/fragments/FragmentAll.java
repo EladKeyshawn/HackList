@@ -24,6 +24,7 @@ import com.projects.elad.hacklist.adapters.MonthObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -40,7 +41,7 @@ import rx.schedulers.Schedulers;
 public class FragmentAll extends Fragment implements FastAdapter.OnClickListener {
 
 
-  private static final String SERVER_BASE_URL = "http://www.hackalist.org/api/1.0/";
+  private static final String SERVER_BASE_URL = "http://www.hackalist.org/api/1.0";
   private FastItemAdapter fastAdapter;
   private Context context;
   RecyclerView hackEventsList;
@@ -92,6 +93,13 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
 
     getHackEventList();
 
+
+    addHackEventsToListAdapter();
+  }
+
+  private void addHackEventsToListAdapter() {
+
+
   }
 
   @Override
@@ -111,17 +119,27 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
 
 
     HacklistApi serverInterface = restAdapter.create(HacklistApi.class);
-    serverInterface.getMonthObject("2016", "01", new Callback<MonthObject>() {
-      @Override
-      public void success(MonthObject monthObject, Response response) {
-        eventsFromFeed.addAll(monthObject.getHackEvents());
-      }
+    serverInterface.getMonthObject("2016", "02")
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeOn(Schedulers.newThread())
+        .subscribe(new Subscriber<Map<String, List<HackEvent>>>() {
+          @Override
+          public void onCompleted() {
 
-      @Override
-      public void failure(RetrofitError error) {
+          }
 
-      }
-    });
+          @Override
+          public void onError(Throwable e) {
+
+          }
+
+          @Override
+          public void onNext(Map<String, List<HackEvent>> stringListMap) {
+            for (Map.Entry<String, List<HackEvent>> entry : stringListMap.entrySet()) {
+              eventsFromFeed.addAll(entry.getValue());
+            }
+          }
+        });
   }
 
 }

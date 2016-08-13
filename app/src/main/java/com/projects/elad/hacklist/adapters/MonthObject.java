@@ -2,12 +2,14 @@ package com.projects.elad.hacklist.adapters;
 
 
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 
 public class MonthObject {
 
-
+  @SerializedName("January")
   private ArrayList<HackEvent> hackEvents = new ArrayList<>();
 
   /**

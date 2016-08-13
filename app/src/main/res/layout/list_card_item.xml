@@ -55,6 +55,36 @@
           android:layout_below="@id/list_item_title"
           />
 
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:gravity="center_vertical"
+          android:layout_below="@id/list_item_date"
+          android:layout_alignStart="@id/list_item_date"
+          android:layout_alignLeft="@id/list_item_date"
+          android:layout_marginTop="8dp">
+
+        <ImageView
+            android:id="@+id/list_item_travel_tick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_ok_tick"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="travel"
+            android:padding="8dp"
+            android:textSize="15dp"
+            android:textStyle="bold"/>
+
+
+      </LinearLayout>
+
+
+
 
 
     </RelativeLayout>

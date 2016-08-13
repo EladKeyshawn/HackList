@@ -97,7 +97,9 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
   private void addHackEventsToListAdapter() {
     for (HackEvent event : eventsFromFeed) {
       boolean travel = event.getTravel().equals("yes");
-      ListItem item = new ListItem(event.getTitle(), event.getStartDate(), travel);
+      boolean prizes = event.getPrize().equals("yes");
+      ListItem item = new ListItem(event.getTitle(),event.getStartDate(),event.getEndDate(),
+          event.getHost(), event.getSize(), event.getLength(), travel, prizes);
       fastAdapter.add(item);
     }
 

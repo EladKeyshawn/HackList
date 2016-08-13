@@ -17,6 +17,12 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
   boolean travel;
 
 
+  public ListItem(String title, String startDate, boolean travel) {
+    this.title = title;
+    this.startDate = startDate;
+    this.travel = travel;
+  }
+
   public String getStartDate() {
     return startDate;
   }

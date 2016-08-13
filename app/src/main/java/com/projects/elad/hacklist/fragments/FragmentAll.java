@@ -84,6 +84,12 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
 
     Toast.makeText(context, "initialized recyclerview list and  adapter", Toast.LENGTH_SHORT).show();
 
+    listItems.add(new ListItem("HackMIT", "17-18 aug", false));
+    listItems.add(new ListItem("YHack", "17-18 aug", true));
+    listItems.add(new ListItem("MHacks", "17-18 aug", false));
+
+    fastAdapter.add(listItems);
+
     getHackEventList();
 
   }

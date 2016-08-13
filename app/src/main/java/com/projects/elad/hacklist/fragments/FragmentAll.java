@@ -18,14 +18,11 @@ import com.mikepenz.fastadapter.IItem;
 import com.mikepenz.fastadapter.adapters.FastItemAdapter;
 import com.projects.elad.hacklist.R;
 import com.projects.elad.hacklist.adapters.HacklistApi;
-import com.projects.elad.hacklist.adapters.HacklistItem;
-import com.projects.elad.hacklist.adapters.MonthObject;
+import com.projects.elad.hacklist.adapters.ListItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import retrofit.RestAdapter;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -42,7 +39,7 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
   private FastItemAdapter fastAdapter;
   private Context context;
   RecyclerView hackEventsList;
-  private ArrayList<HacklistItem> hacklistItems;
+  private ArrayList<ListItem> hacklistItems;
 
   public FragmentAll() {
     // Required empty public constructor
@@ -103,7 +100,7 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
     serverInterface.getMonthObject("2016", "01")
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Subscriber<List<HacklistItem>>() {
+        .subscribe(new Subscriber<List<ListItem>>() {
           @Override
           public void onCompleted() {
 
@@ -115,7 +112,7 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
           }
 
           @Override
-          public void onNext(List<HacklistItem> hacklistItems) {
+          public void onNext(List<ListItem> hacklistItems) {
               fastAdapter.add(hacklistItems);
           }
         });

@@ -10,7 +10,7 @@ import rx.Observable;
 public interface HacklistApi {
 
   @GET("/{YEAR}/{MONTH}.json")
-  Observable<List<HacklistItem>> getMonthObject(@Path("YEAR") String year, @Path("MONTH") String month);
+  Observable<List<ListItem>> getMonthObject(@Path("YEAR") String year, @Path("MONTH") String month);
 
 
 }

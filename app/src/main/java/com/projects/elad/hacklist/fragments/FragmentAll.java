@@ -20,16 +20,14 @@ import com.projects.elad.hacklist.R;
 import com.projects.elad.hacklist.adapters.HackEvent;
 import com.projects.elad.hacklist.adapters.HacklistApi;
 import com.projects.elad.hacklist.adapters.ListItem;
-import com.projects.elad.hacklist.adapters.MonthObject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import retrofit.Callback;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -42,9 +40,10 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
 
 
   private static final String SERVER_BASE_URL = "http://www.hackalist.org/api/1.0";
+  @BindView(R.id.all_hackathons_list)
+  RecyclerView hackEventsList;
   private FastItemAdapter fastAdapter;
   private Context context;
-  RecyclerView hackEventsList;
   private ArrayList<ListItem> listItems;
   private List<HackEvent> eventsFromFeed;
 
@@ -56,22 +55,22 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
     context = super.getActivity();
+
+    View ourView = inflater.inflate(R.layout.fragment_view_all, container, false);
+    ButterKnife.bind(this,ourView);
+
     listItems = new ArrayList<>();
 
     eventsFromFeed = new ArrayList<>();
 
-    Toast.makeText(context, "onCreateView called", Toast.LENGTH_SHORT).show();
 
-    return inflater.inflate(R.layout.fragment_view_all, container, false);
+    return ourView;
   }
 
 
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-//    ButterKnife.bind(getActivity()); // check later for crashes
-    Toast.makeText(context, "onViewCreate called", Toast.LENGTH_SHORT).show();
 
     fastAdapter = new FastItemAdapter();
     fastAdapter.withSelectOnLongClick(true);
@@ -79,26 +78,28 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
     fastAdapter.withOnClickListener(this);
 
 
-    hackEventsList = (RecyclerView) view.findViewById(R.id.all_hackathons_list);
     hackEventsList.setLayoutManager(new LinearLayoutManager(context));
     hackEventsList.setAdapter(fastAdapter);
 
     Toast.makeText(context, "initialized recyclerview list and  adapter", Toast.LENGTH_SHORT).show();
 
-    listItems.add(new ListItem("HackMIT", "17-18 aug", false));
-    listItems.add(new ListItem("YHack", "17-18 aug", true));
-    listItems.add(new ListItem("MHacks", "17-18 aug", false));
+//    listItems.add(new ListItem("HackMIT", "17-18 aug", false));
+//    listItems.add(new ListItem("YHack", "17-18 aug", true));
+//    listItems.add(new ListItem("MHacks", "17-18 aug", false));
 
-    fastAdapter.add(listItems);
+//    fastAdapter.add(listItems);
 
     getHackEventList();
 
 
-    addHackEventsToListAdapter();
   }
 
   private void addHackEventsToListAdapter() {
-
+    for (HackEvent event : eventsFromFeed) {
+      boolean travel = event.getTravel().equals("yes");
+      ListItem item = new ListItem(event.getTitle(), event.getStartDate(), travel);
+      fastAdapter.add(item);
+    }
 
   }
 
@@ -115,8 +116,6 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
         .setEndpoint(SERVER_BASE_URL)
         .build();
 
-    Toast.makeText(context, "Created rest adapter", Toast.LENGTH_SHORT).show();
-
 
     HacklistApi serverInterface = restAdapter.create(HacklistApi.class);
     serverInterface.getMonthObject("2016", "02")
@@ -125,6 +124,7 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
         .subscribe(new Subscriber<Map<String, List<HackEvent>>>() {
           @Override
           public void onCompleted() {
+            addHackEventsToListAdapter();
 
           }
 

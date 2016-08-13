@@ -25,7 +25,7 @@
         android:layout_height="match_parent">
 
 
-
+      <!--Hackathon icon-->
       <ImageView
           android:id="@+id/list_item_icon"
           android:layout_width="100dp"
@@ -33,41 +33,132 @@
           android:src="@mipmap/ic_launcher"
           />
 
+
+      <!--hackathon title-->
       <TextView
           android:id="@+id/list_item_title"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="Hack the North"
           android:layout_alignParentTop="true"
-          android:layout_toRightOf="@+id/list_item_icon"
-          android:layout_toEndOf="@+id/list_item_icon"
+          android:layout_toRightOf="@id/list_item_icon"
+          android:layout_toEndOf="@id/list_item_icon"
           android:layout_marginTop="18dp"
           android:textSize="20sp"
           android:textStyle="bold"
           />
 
 
-      <TextView
-          android:id="@+id/list_item_date"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text= "4 August"
-          android:layout_toRightOf="@+id/list_item_icon"
-          android:layout_toEndOf="@+id/list_item_icon"
-          android:layout_marginTop="6dp"
-          android:textSize="17sp"
-          android:textStyle="bold"
-          android:layout_below="@id/list_item_title"
-          />
+      <!--Date-->
 
       <LinearLayout
+          android:id="@+id/list_item_date_linearlayout"
+          android:layout_width="200dp"
+          android:layout_height="wrap_content"
+          android:layout_toRightOf="@id/list_item_icon"
+          android:layout_toEndOf="@id/list_item_icon"
+          android:layout_below="@id/list_item_title"
+          android:orientation="horizontal"
+          android:layout_marginTop="6dp"
+          android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/list_item_start_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text= "4 August"
+
+            android:textSize="17sp"
+            android:textStyle="bold"
+            />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_right_arrow"
+            android:layout_marginLeft="4dp"/>
+
+
+        <TextView
+            android:id="@+id/list_item_end_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text= "4 August"
+            android:layout_marginLeft="6dp"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            />
+
+      </LinearLayout>
+
+
+
+      <!--hackathon location-->
+
+      <LinearLayout
+          android:id="@+id/list_item_location_linearlayout"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/list_item_date_linearlayout"
+          android:layout_toRightOf="@id/list_item_icon"
+          android:layout_toEndOf="@id/list_item_icon"
+          android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="In: "
+            android:layout_marginTop="8dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/list_item_host"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MIT "
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=",   "
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/list_item_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Canada ON "
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            />
+
+
+      </LinearLayout>
+
+
+
+      <!--Travel layout-->
+
+      <LinearLayout
+          android:id="@+id/list_item_travel_tick_linearlayout"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:orientation="horizontal"
           android:gravity="center_vertical"
-          android:layout_below="@id/list_item_date"
-          android:layout_alignStart="@id/list_item_date"
-          android:layout_alignLeft="@id/list_item_date"
+          android:layout_below="@id/list_item_location_linearlayout"
+          android:layout_alignStart="@id/list_item_date_linearlayout"
+          android:layout_alignLeft="@id/list_item_date_linearlayout"
           android:layout_marginTop="8dp">
 
         <ImageView
@@ -80,10 +171,43 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="travel"
+            android:text="Travel"
             android:padding="8dp"
             android:textSize="15dp"
             android:textStyle="bold"/>
+
+      </LinearLayout>
+
+
+      <!--Prizes layout-->
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:gravity="center_vertical"
+          android:layout_below="@id/list_item_travel_tick_linearlayout"
+          android:layout_alignStart="@id/list_item_date_linearlayout"
+          android:layout_alignLeft="@id/list_item_date_linearlayout"
+          android:layout_marginTop="8dp">
+
+        <ImageView
+            android:id="@+id/list_item_prize_tick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_ok_tick"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prizes"
+            android:padding="8dp"
+            android:textSize="15dp"
+            android:textStyle="bold"/>
+
+
+
+
 
 
       </LinearLayout>

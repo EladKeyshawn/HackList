@@ -65,6 +65,10 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
   protected static class ViewHolder extends RecyclerView.ViewHolder {
     TextView title;
     TextView startDate;
+    TextView endDate;
+    TextView host;
+    TextView location;
+
     ImageView travelIcon;
 
 
@@ -72,7 +76,10 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
       super(itemView);
 
       title = (TextView) itemView.findViewById(R.id.list_item_title);
-      startDate = (TextView) itemView.findViewById(R.id.list_item_date);
+      startDate = (TextView) itemView.findViewById(R.id.list_item_start_date);
+      endDate = (TextView) itemView.findViewById(R.id.list_item_end_date);
+      host = (TextView) itemView.findViewById(R.id.list_item_host);
+      location = (TextView) itemView.findViewById(R.id.list_item_location);
       travelIcon = (ImageView) itemView.findViewById(R.id.list_item_travel_tick);
     }
   }

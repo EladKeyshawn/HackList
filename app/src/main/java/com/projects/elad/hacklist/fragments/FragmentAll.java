@@ -5,9 +5,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -21,6 +25,9 @@ import com.projects.elad.hacklist.adapters.HackEvent;
 import com.projects.elad.hacklist.adapters.HacklistApi;
 import com.projects.elad.hacklist.adapters.ListItem;
 import com.projects.elad.hacklist.utils.Constants;
+import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
+import com.yalantis.contextmenu.lib.MenuObject;
+import com.yalantis.contextmenu.lib.MenuParams;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,11 +53,23 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
   private Context context;
   private ArrayList<ListItem> listItems;
   private List<HackEvent> eventsFromFeed;
+  private ContextMenuDialogFragment mMenuDialogFragment;
 
   public FragmentAll() {
     // Required empty public constructor
   }
 
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setHasOptionsMenu(true);
+
+  }
+
+  @Override
+  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    super.onCreateOptionsMenu(menu, inflater);
+  }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,6 +91,8 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
+
+
     fastAdapter = new FastItemAdapter();
     fastAdapter.withSelectOnLongClick(true);
     fastAdapter.withSelectable(true);
@@ -90,6 +111,27 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
     getHackEventList();
 
 
+  }
+
+
+
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.action_travel_only:
+        if(item.isChecked()){
+          item.setChecked(false);
+          // TODO: unapply filter
+        } else {
+          item.setChecked(true);
+          // TODO: apply filter
+
+        }
+        return true;
+      default:
+        return super.onOptionsItemSelected(item);
+    }
   }
 
   private void addHackEventsToListAdapter() {
@@ -146,4 +188,6 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
   public boolean onLongClick(View v, IAdapter adapter, IItem item, int position) {
     return false;
   }
+
+
 }

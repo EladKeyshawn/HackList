@@ -20,6 +20,6 @@ public class UsefulFunctions {
 
     int slashIndex = url.lastIndexOf('/');
 
-    return url.substring(slashIndex + 1) + "/picture";
+    return url.substring(slashIndex + 1) + "/picture?type=large";
   }
 }

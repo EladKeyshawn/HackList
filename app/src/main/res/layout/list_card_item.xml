@@ -30,6 +30,7 @@
           android:id="@+id/list_item_icon"
           android:layout_width="100dp"
           android:layout_height="100dp"
+          android:padding="8dp"
           android:src="@mipmap/ic_launcher"
           />
 

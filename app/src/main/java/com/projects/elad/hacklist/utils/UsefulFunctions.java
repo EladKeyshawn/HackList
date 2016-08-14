@@ -15,4 +15,11 @@ public class UsefulFunctions {
     }
     return resultString.toString();
   }
+
+  public static String getPageIdFromUrl (String url) {
+
+    int slashIndex = url.lastIndexOf('/');
+
+    return url.substring(slashIndex + 1) + "/picture";
+  }
 }

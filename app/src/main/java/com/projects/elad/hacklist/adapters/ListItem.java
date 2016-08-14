@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.projects.elad.hacklist.R;
@@ -17,7 +16,6 @@ import com.squareup.picasso.Picasso;
 public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
 
 
-
   Context context;
 
   String title;
@@ -26,7 +24,7 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
 
 
   String host;
-//  String location;
+  //  String location;
   String people;
   String duration;
 
@@ -38,7 +36,7 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
 
 
   public ListItem(Context context, String title, String startDate, String endDate, String host,
-                   String people, String duration, boolean travel, boolean prizes, String facebookUrl) {
+                  String people, String duration, boolean travel, boolean prizes, String facebookUrl) {
     this.context = context;
     this.title = title;
     this.startDate = startDate;
@@ -76,7 +74,6 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
   }
 
 
-
   public String getPeople() {
     return people;
   }
@@ -90,9 +87,7 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
     return prizes;
   }
 
-  public String getFacebookUrl() {
-    return facebookUrl;
-  }
+  public String getFacebookUrl() { return facebookUrl; }
 
   /*   Here starts fast adapter implementation   */
 
@@ -108,7 +103,6 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
 
   @Override
   public void bindView(ListItem.ViewHolder holder) {
-    //call super so the selection is already handled for you
     super.bindView(holder);
 
     holder.title.setText(getTitle());
@@ -142,7 +136,7 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
     TextView startDate;
     TextView endDate;
     TextView host;
-//    TextView location;
+    //    TextView location;
     TextView people;
     TextView duration;
 

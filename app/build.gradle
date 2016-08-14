@@ -42,5 +42,11 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
 
+    compile('com.github.ozodrukh:CircularReveal:1.1.1@aar') {
+        transitive = true;
+    }
+
+    compile 'com.yalantis:contextmenu:1.0.7'
+
 
 }

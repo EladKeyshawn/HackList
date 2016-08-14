@@ -10,13 +10,13 @@ import android.widget.Toast;
 
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.projects.elad.hacklist.R;
+import com.projects.elad.hacklist.utils.Constants;
 import com.projects.elad.hacklist.utils.UsefulFunctions;
 import com.squareup.picasso.Picasso;
 
 public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
 
 
-  String FACEBOOK_API_GET_PAGE_PICTURE =  "https://graph.facebook.com/v2.7/"; //** /{page-id}/picture **/
 
   Context context;
 
@@ -127,7 +127,7 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
       holder.prizesIcon.setImageResource(R.drawable.ic_x_red);
     }
 
-    String linkToPagePic = FACEBOOK_API_GET_PAGE_PICTURE + UsefulFunctions.getPageIdFromUrl(getFacebookUrl());
+    String linkToPagePic = Constants.FACEBOOK_API_GET_PAGE_PICTURE + UsefulFunctions.getPageIdFromUrl(getFacebookUrl());
     Picasso.with(context)
 //        .load("https://hackthenorth.com/2014/img/logo.png")
         .load(linkToPagePic)

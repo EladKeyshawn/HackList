@@ -20,6 +20,7 @@ import com.projects.elad.hacklist.R;
 import com.projects.elad.hacklist.adapters.HackEvent;
 import com.projects.elad.hacklist.adapters.HacklistApi;
 import com.projects.elad.hacklist.adapters.ListItem;
+import com.projects.elad.hacklist.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,10 +37,9 @@ import rx.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentAll extends Fragment implements FastAdapter.OnClickListener {
+public class FragmentAll extends Fragment implements FastAdapter.OnClickListener, FastAdapter.OnLongClickListener {
 
 
-  private static final String SERVER_BASE_URL = "http://www.hackalist.org/api/1.0";
   @BindView(R.id.all_hackathons_list)
   RecyclerView hackEventsList;
   private FastItemAdapter fastAdapter;
@@ -76,7 +76,7 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
     fastAdapter.withSelectOnLongClick(true);
     fastAdapter.withSelectable(true);
     fastAdapter.withOnClickListener(this);
-
+    fastAdapter.withOnLongClickListener(this);
 
     hackEventsList.setLayoutManager(new LinearLayoutManager(context));
     hackEventsList.setAdapter(fastAdapter);
@@ -85,7 +85,6 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
 //    listItems.add(new ListItem("HackMIT", "17-18 aug", false));
 //    listItems.add(new ListItem("YHack", "17-18 aug", true));
 //    listItems.add(new ListItem("MHacks", "17-18 aug", false));
-
 //    fastAdapter.add(listItems);
 
     getHackEventList();
@@ -114,7 +113,7 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
 
     RestAdapter restAdapter = new RestAdapter.Builder()
         .setLogLevel(RestAdapter.LogLevel.FULL)
-        .setEndpoint(SERVER_BASE_URL)
+        .setEndpoint(Constants.HACKALIST_BASE_URL)
         .build();
 
 
@@ -143,4 +142,8 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
         });
   }
 
+  @Override
+  public boolean onLongClick(View v, IAdapter adapter, IItem item, int position) {
+    return false;
+  }
 }

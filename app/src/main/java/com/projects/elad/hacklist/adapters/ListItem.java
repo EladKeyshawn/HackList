@@ -29,14 +29,14 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
   String duration;
 
 
-  boolean travel;
+  String travel;
   boolean prizes;
 
   String facebookUrl;
 
 
   public ListItem(Context context, String title, String startDate, String endDate, String host,
-                  String people, String duration, boolean travel, boolean prizes, String facebookUrl) {
+                  String people, String duration, String travel, boolean prizes, String facebookUrl) {
     this.context = context;
     this.title = title;
     this.startDate = startDate;
@@ -64,7 +64,7 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
     return title;
   }
 
-  public boolean getTravel() {
+  public String getTravel() {
     return travel;
   }
 
@@ -114,7 +114,7 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
     holder.duration.setText(getDuration());
 
 
-    if (!getTravel()) {
+    if (getTravel().contains("no")) {
       holder.travelIcon.setImageResource(R.drawable.ic_x_red);
     }
     if (!getPrizes()) {

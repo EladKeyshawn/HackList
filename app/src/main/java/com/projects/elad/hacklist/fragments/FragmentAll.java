@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,11 +13,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.IItem;
+import com.mikepenz.fastadapter.IItemAdapter;
 import com.mikepenz.fastadapter.adapters.FastItemAdapter;
 import com.projects.elad.hacklist.R;
 import com.projects.elad.hacklist.adapters.HackEvent;
@@ -26,8 +25,6 @@ import com.projects.elad.hacklist.adapters.HacklistApi;
 import com.projects.elad.hacklist.adapters.ListItem;
 import com.projects.elad.hacklist.utils.Constants;
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
-import com.yalantis.contextmenu.lib.MenuObject;
-import com.yalantis.contextmenu.lib.MenuParams;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +74,7 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
     context = super.getActivity();
 
     View ourView = inflater.inflate(R.layout.fragment_view_all, container, false);
-    ButterKnife.bind(this,ourView);
+    ButterKnife.bind(this, ourView);
 
     listItems = new ArrayList<>();
 
@@ -92,13 +89,17 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
 
-
     fastAdapter = new FastItemAdapter();
     fastAdapter.withSelectOnLongClick(true);
     fastAdapter.withSelectable(true);
     fastAdapter.withOnClickListener(this);
     fastAdapter.withOnLongClickListener(this);
-
+    fastAdapter.withFilterPredicate(new IItemAdapter.Predicate<ListItem>() {
+      @Override
+      public boolean filter(ListItem item, CharSequence constraint) {
+        return !item.getTravel().toLowerCase().contains(constraint.toString().toLowerCase());
+      }
+    });
     hackEventsList.setLayoutManager(new LinearLayoutManager(context));
     hackEventsList.setAdapter(fastAdapter);
 
@@ -114,19 +115,18 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
   }
 
 
-
-
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.action_travel_only:
-        if(item.isChecked()){
+        if (item.isChecked()) {
           item.setChecked(false);
           // TODO: unapply filter
+          fastAdapter.filter("");
         } else {
           item.setChecked(true);
           // TODO: apply filter
-
+          fastAdapter.filter("yes");
         }
         return true;
       default:
@@ -136,10 +136,10 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
 
   private void addHackEventsToListAdapter() {
     for (HackEvent event : eventsFromFeed) {
-      boolean travel = event.getTravel().equals("yes");
+//      boolean travel = event.getTravel().equals("yes");
       boolean prizes = event.getPrize().equals("yes");
-      ListItem item = new ListItem(context,event.getTitle(),event.getStartDate(),event.getEndDate(),
-          event.getHost(), event.getSize(), event.getLength(), travel, prizes, event.getFacebookURL());
+      ListItem item = new ListItem(context, event.getTitle(), event.getStartDate(), event.getEndDate(),
+          event.getHost(), event.getSize(), event.getLength(), event.getTravel(), prizes, event.getFacebookURL());
       fastAdapter.add(item);
     }
 

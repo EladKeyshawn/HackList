@@ -118,4 +118,14 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.main_menu_action_refine:
+//        mMenuDialogFragment.show(getSupportFragmentManager(), "ContextMenuDialogFragment");
+        break;
+    }
+    return super.onOptionsItemSelected(item);
+  }
 }

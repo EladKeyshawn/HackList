@@ -6,15 +6,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.projects.elad.hacklist.R;
+import com.projects.elad.hacklist.utils.UsefulFunctions;
 import com.squareup.picasso.Picasso;
 
 public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
 
 
-  String FACEBOOK_API_GET_PAGE_PICTURE =  "http://graph.facebook.com/v2.7/ "; //** /{page-id}/picture **/
+  String FACEBOOK_API_GET_PAGE_PICTURE =  "https://graph.facebook.com/v2.7/"; //** /{page-id}/picture **/
 
   Context context;
 
@@ -32,9 +34,11 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
   boolean travel;
   boolean prizes;
 
+  String facebookUrl;
+
 
   public ListItem(Context context, String title, String startDate, String endDate, String host,
-                   String people, String duration, boolean travel, boolean prizes) {
+                   String people, String duration, boolean travel, boolean prizes, String facebookUrl) {
     this.context = context;
     this.title = title;
     this.startDate = startDate;
@@ -45,6 +49,8 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
     this.duration = duration;
     this.travel = travel;
     this.prizes = prizes;
+
+    this.facebookUrl = facebookUrl;
   }
 
 
@@ -84,7 +90,11 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
     return prizes;
   }
 
-/*   Here starts fast adapter implementation   */
+  public String getFacebookUrl() {
+    return facebookUrl;
+  }
+
+  /*   Here starts fast adapter implementation   */
 
   @Override
   public int getType() {
@@ -117,9 +127,10 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
       holder.prizesIcon.setImageResource(R.drawable.ic_x_red);
     }
 
-
-
-    Picasso.with(context).load("FACEBOOK_GRAPH_URL")
+    String linkToPagePic = FACEBOOK_API_GET_PAGE_PICTURE + UsefulFunctions.getPageIdFromUrl(getFacebookUrl());
+    Picasso.with(context)
+//        .load("https://hackthenorth.com/2014/img/logo.png")
+        .load(linkToPagePic)
         .placeholder(R.mipmap.ic_launcher)
         .into(holder.profile);
 

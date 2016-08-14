@@ -81,7 +81,6 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
     hackEventsList.setLayoutManager(new LinearLayoutManager(context));
     hackEventsList.setAdapter(fastAdapter);
 
-    Toast.makeText(context, "initialized recyclerview list and  adapter", Toast.LENGTH_SHORT).show();
 
 //    listItems.add(new ListItem("HackMIT", "17-18 aug", false));
 //    listItems.add(new ListItem("YHack", "17-18 aug", true));
@@ -98,8 +97,8 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
     for (HackEvent event : eventsFromFeed) {
       boolean travel = event.getTravel().equals("yes");
       boolean prizes = event.getPrize().equals("yes");
-      ListItem item = new ListItem(event.getTitle(),event.getStartDate(),event.getEndDate(),
-          event.getHost(), event.getSize(), event.getLength(), travel, prizes);
+      ListItem item = new ListItem(context,event.getTitle(),event.getStartDate(),event.getEndDate(),
+          event.getHost(), event.getSize(), event.getLength(), travel, prizes, event.getFacebookURL());
       fastAdapter.add(item);
     }
 

@@ -12,7 +12,17 @@
       android:id="@+id/main_menu_action_refine"
       android:icon="@drawable/ic_refine"
       android:title="refine"
-      app:showAsAction="ifRoom"/>
+      app:showAsAction="ifRoom">
+
+    <menu>
+      <item
+          android:id="@+id/action_travel_only"
+          android:title="only travel"
+          android:checkable="true"/>
+
+    </menu>
+
+  </item>
 
   <item
       android:id="@+id/main_menu_action_about"

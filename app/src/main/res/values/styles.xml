@@ -6,6 +6,7 @@
     <item name="colorPrimary">@color/primary</item>
     <item name="colorPrimaryDark">@color/primary_dark</item>
     <item name="colorAccent">@color/accent</item>
+    <item name="actionOverflowMenuStyle">@style/OverflowMenu</item>
   </style>
 
   <style name="AppTheme.NoActionBar">
@@ -16,5 +17,13 @@
   <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
   <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+  <style name="OverflowMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
+    <!-- Required for pre-Lollipop. -->
+    <item name="overlapAnchor">false</item>
+
+    <!-- Required for Lollipop. -->
+    <item name="android:overlapAnchor">false</item>
+  </style>
 
 </resources>

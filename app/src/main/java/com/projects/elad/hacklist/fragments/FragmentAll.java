@@ -5,9 +5,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -21,6 +25,9 @@ import com.projects.elad.hacklist.adapters.HackEvent;
 import com.projects.elad.hacklist.adapters.HacklistApi;
 import com.projects.elad.hacklist.adapters.ListItem;
 import com.projects.elad.hacklist.utils.Constants;
+import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
+import com.yalantis.contextmenu.lib.MenuObject;
+import com.yalantis.contextmenu.lib.MenuParams;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,11 +53,17 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
   private Context context;
   private ArrayList<ListItem> listItems;
   private List<HackEvent> eventsFromFeed;
+  private ContextMenuDialogFragment mMenuDialogFragment;
 
   public FragmentAll() {
     // Required empty public constructor
   }
 
+
+  @Override
+  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    super.onCreateOptionsMenu(menu, inflater);
+  }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,6 +85,9 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
+    setUpRefineMenu();
+
+
     fastAdapter = new FastItemAdapter();
     fastAdapter.withSelectOnLongClick(true);
     fastAdapter.withSelectable(true);
@@ -89,6 +105,50 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
 
     getHackEventList();
 
+
+  }
+
+  private void setUpRefineMenu() {
+    MenuObject close = new MenuObject();
+    close.setResource(R.drawable.ic_ok_tick);
+
+    MenuObject send = new MenuObject("Only Travel");
+    send.setResource(R.drawable.ic_x_red);
+
+    int toolbarHeight;
+
+    AppCompatActivity compatParentActivity = (AppCompatActivity) getActivity();
+    if (compatParentActivity.getSupportActionBar() != null) {
+       toolbarHeight = compatParentActivity.getSupportActionBar().getHeight();
+    } else {
+      toolbarHeight = 2;
+    }
+    List<MenuObject> menuObjects = new ArrayList<>();
+    menuObjects.add(close);
+    menuObjects.add(send);
+
+
+
+    MenuParams menuParams = new MenuParams();
+    menuParams.setActionBarSize(toolbarHeight);
+    menuParams.setMenuObjects(menuObjects);
+    menuParams.setClosableOutside(true);
+    // set other settings to meet your needs
+    mMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams);
+
+
+  }
+
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+
+    if(item.getItemId() == R.id.main_menu_action_refine) {
+      mMenuDialogFragment.show(getFragmentManager(), "ContextMenuDialogFragment");
+
+    }
+
+    return super.onOptionsItemSelected(item);
 
   }
 

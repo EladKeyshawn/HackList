@@ -30,13 +30,13 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
 
 
   String travel;
-  boolean prizes;
+  String prizes;
 
   String facebookUrl;
 
 
   public ListItem(Context context, String title, String startDate, String endDate, String host,
-                  String people, String duration, String travel, boolean prizes, String facebookUrl) {
+                  String people, String duration, String travel, String prizes, String facebookUrl) {
     this.context = context;
     this.title = title;
     this.startDate = startDate;
@@ -83,7 +83,7 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
   }
 
 
-  public boolean getPrizes() {
+  public String getPrizes() {
     return prizes;
   }
 
@@ -114,11 +114,16 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
     holder.duration.setText(getDuration());
 
 
-    if (getTravel().contains("no")) {
+    if (getTravel().equals("no")) {
       holder.travelIcon.setImageResource(R.drawable.ic_x_red);
+    } else if (getTravel().equals("unknown")){
+        //TODO: change icon to unknown
+      holder.travelIcon.setImageResource(R.drawable.ic_question);
     }
-    if (!getPrizes()) {
+    if (getPrizes().equals("no")) {
       holder.prizesIcon.setImageResource(R.drawable.ic_x_red);
+    } else if (getPrizes().equals("unknown")) {
+      holder.travelIcon.setImageResource(R.drawable.ic_question);
     }
 
     String linkToPagePic = Constants.FACEBOOK_API_GET_PAGE_PICTURE + UsefulFunctions.getPageIdFromUrl(getFacebookUrl());

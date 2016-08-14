@@ -97,7 +97,7 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
     fastAdapter.withFilterPredicate(new IItemAdapter.Predicate<ListItem>() {
       @Override
       public boolean filter(ListItem item, CharSequence constraint) {
-        return !item.getTravel().toLowerCase().contains(constraint.toString().toLowerCase());
+        return item.getTravel().equals(constraint.toString());
       }
     });
     hackEventsList.setLayoutManager(new LinearLayoutManager(context));
@@ -126,7 +126,7 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
         } else {
           item.setChecked(true);
           // TODO: apply filter
-          fastAdapter.filter("yes");
+          fastAdapter.filter("no"); // filter out all that contain "no"
         }
         return true;
       default:
@@ -137,9 +137,9 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
   private void addHackEventsToListAdapter() {
     for (HackEvent event : eventsFromFeed) {
 //      boolean travel = event.getTravel().equals("yes");
-      boolean prizes = event.getPrize().equals("yes");
+//      boolean prizes = event.getPrize().equals("yes");
       ListItem item = new ListItem(context, event.getTitle(), event.getStartDate(), event.getEndDate(),
-          event.getHost(), event.getSize(), event.getLength(), event.getTravel(), prizes, event.getFacebookURL());
+          event.getHost(), event.getSize(), event.getLength(), event.getTravel(), event.getPrize(), event.getFacebookURL());
       fastAdapter.add(item);
     }
 

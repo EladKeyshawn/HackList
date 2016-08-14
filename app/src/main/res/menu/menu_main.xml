@@ -11,7 +11,7 @@
   <item
       android:id="@+id/main_menu_action_refine"
       android:icon="@drawable/ic_refine"
-      android:title="refine"
+      android:title="Refine"
       app:showAsAction="ifRoom">
 
     <menu>

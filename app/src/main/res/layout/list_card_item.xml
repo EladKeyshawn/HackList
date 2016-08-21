@@ -38,13 +38,27 @@
       <!--hackathon title-->
       <TextView
           android:id="@+id/list_item_title"
-          android:layout_width="wrap_content"
+          android:layout_width="150dp"
           android:layout_height="wrap_content"
           android:layout_alignParentTop="true"
           android:layout_marginTop="18dp"
           android:layout_toEndOf="@id/list_item_icon"
           android:layout_toRightOf="@id/list_item_icon"
           android:text="Hack the North"
+          android:textSize="20sp"
+          android:textStyle="bold"
+          />
+
+
+      <TextView
+          android:id="@+id/list_item_year"
+          android:layout_width="60dp"
+          android:layout_height="wrap_content"
+          android:layout_alignParentTop="true"
+          android:layout_marginTop="18dp"
+          android:layout_toEndOf="@id/list_item_title"
+          android:layout_toRightOf="@id/list_item_title"
+          android:layout_marginLeft="8dp"
           android:textSize="20sp"
           android:textStyle="bold"
           />

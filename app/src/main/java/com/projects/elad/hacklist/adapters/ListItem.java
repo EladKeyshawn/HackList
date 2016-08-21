@@ -19,6 +19,7 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
   Context context;
 
   String title;
+  String year;
   String startDate;
   String endDate;
 
@@ -35,14 +36,14 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
   String facebookUrl;
 
 
-  public ListItem(Context context, String title, String startDate, String endDate, String host,
+  public ListItem(Context context, String title,String year, String startDate, String endDate, String host,
                   String people, String duration, String travel, String prizes, String facebookUrl) {
     this.context = context;
     this.title = title;
     this.startDate = startDate;
     this.endDate = endDate;
     this.host = host;
-//    this.location = location;
+    this.year = year;
     this.people = people;
     this.duration = duration;
     this.travel = travel;
@@ -112,6 +113,7 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
 //    holder.location.setText(getLocation());
     holder.people.setText(getPeople());
     holder.duration.setText(getDuration());
+    holder.year.setText("- " + year);
 
 
     switch (travel) {
@@ -151,6 +153,7 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
 
   protected static class ViewHolder extends RecyclerView.ViewHolder {
     TextView title;
+    TextView year;
     TextView startDate;
     TextView endDate;
     TextView host;
@@ -170,7 +173,7 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
       startDate = (TextView) itemView.findViewById(R.id.list_item_start_date);
       endDate = (TextView) itemView.findViewById(R.id.list_item_end_date);
       host = (TextView) itemView.findViewById(R.id.list_item_host);
-//      location = (TextView) itemView.findViewById(R.id.list_item_location);
+      year = (TextView) itemView.findViewById(R.id.list_item_year);
       travelIcon = (ImageView) itemView.findViewById(R.id.list_item_travel_tick);
       prizesIcon = (ImageView) itemView.findViewById(R.id.list_item_prize_tick);
       people = (TextView) itemView.findViewById(R.id.list_item_size);

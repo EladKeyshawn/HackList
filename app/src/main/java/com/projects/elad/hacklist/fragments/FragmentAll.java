@@ -80,6 +80,27 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
 
     eventsFromFeed = new ArrayList<>();
 
+    fastAdapter = new FastItemAdapter();
+    fastAdapter.withSelectOnLongClick(true);
+    fastAdapter.withSelectable(true);
+    fastAdapter.withOnClickListener(this);
+    fastAdapter.withOnLongClickListener(this);
+    fastAdapter.withFilterPredicate(new IItemAdapter.Predicate<ListItem>() {
+      @Override
+      public boolean filter(ListItem item, CharSequence constraint) {
+            switch (constraint.toString()){
+              case "travel":
+                return item.getTravel().equals("no") || item.getTravel().equals("unknown") ;
+
+              case "":
+                return true;
+              default:
+                return false;
+
+            }
+
+      }
+    });
 
     return ourView;
   }
@@ -89,17 +110,8 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
 
-    fastAdapter = new FastItemAdapter();
-    fastAdapter.withSelectOnLongClick(true);
-    fastAdapter.withSelectable(true);
-    fastAdapter.withOnClickListener(this);
-    fastAdapter.withOnLongClickListener(this);
-    fastAdapter.withFilterPredicate(new IItemAdapter.Predicate<ListItem>() {
-      @Override
-      public boolean filter(ListItem item, CharSequence constraint) {
-        return item.getTravel().equals(constraint.toString());
-      }
-    });
+
+
     hackEventsList.setLayoutManager(new LinearLayoutManager(context));
     hackEventsList.setAdapter(fastAdapter);
 
@@ -118,17 +130,18 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
-      case R.id.action_travel_only:
-        if (item.isChecked()) {
+      case R.id.action_travel_only: {
+        if (item.isChecked()) { // unchecking it now
           item.setChecked(false);
           // TODO: unapply filter
           fastAdapter.filter("");
         } else {
           item.setChecked(true);
           // TODO: apply filter
-          fastAdapter.filter("no"); // filter out all that contain "no"
+          fastAdapter.filter("travel"); // filter out all that contain "no"
         }
         return true;
+      }
       default:
         return super.onOptionsItemSelected(item);
     }

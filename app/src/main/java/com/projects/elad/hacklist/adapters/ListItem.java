@@ -114,16 +114,27 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
     holder.duration.setText(getDuration());
 
 
-    if (getTravel().equals("no")) {
-      holder.travelIcon.setImageResource(R.drawable.ic_x_red);
-    } else if (getTravel().equals("unknown")){
-        //TODO: change icon to unknown
-      holder.travelIcon.setImageResource(R.drawable.ic_question);
+    switch (travel) {
+      case "no":
+        holder.travelIcon.setImageResource(R.drawable.ic_x_red);
+        break;
+      case "unknown":
+        holder.travelIcon.setImageResource(R.drawable.ic_question);
+        break;
+      case "yes":
+        holder.travelIcon.setImageResource(R.drawable.ic_ok_tick);
+        break;
     }
-    if (getPrizes().equals("no")) {
-      holder.prizesIcon.setImageResource(R.drawable.ic_x_red);
-    } else if (getPrizes().equals("unknown")) {
-      holder.travelIcon.setImageResource(R.drawable.ic_question);
+    switch (getPrizes()) {
+      case "no":
+        holder.prizesIcon.setImageResource(R.drawable.ic_x_red);
+        break;
+      case "unknown":
+        holder.prizesIcon.setImageResource(R.drawable.ic_question);
+        break;
+      case "yes":
+        holder.prizesIcon.setImageResource(R.drawable.ic_ok_tick);
+        break;
     }
 
     String linkToPagePic = Constants.FACEBOOK_API_GET_PAGE_PICTURE + UsefulFunctions.getPageIdFromUrl(getFacebookUrl());
@@ -134,6 +145,8 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
         .into(holder.profile);
 
   }
+
+
 
 
   protected static class ViewHolder extends RecyclerView.ViewHolder {

@@ -19,6 +19,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.IItem;
@@ -30,7 +31,6 @@ import com.projects.elad.hacklist.adapters.HacklistApi;
 import com.projects.elad.hacklist.adapters.ListItem;
 import com.projects.elad.hacklist.utils.Constants;
 import com.projects.elad.hacklist.utils.UsefulFunctions;
-import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,11 +53,12 @@ public class FragmentHome extends Fragment implements  FastAdapter.OnLongClickLi
 
   @BindView(R.id.all_hackathons_list)
   RecyclerView hackEventsList;
+  @BindView(R.id.fragment_home_bottomsheet)
+  BottomSheetLayout bottomsheet;
   private FastItemAdapter fastAdapter;
   private Context context;
   private ArrayList<ListItem> listItems;
   private List<HackEvent> eventsFromFeed;
-  private ContextMenuDialogFragment mMenuDialogFragment;
   private HacklistApi serverInterface;
   private SearchView searchBox;
   private Menu ourOptionsMenu;
@@ -119,7 +120,9 @@ public class FragmentHome extends Fragment implements  FastAdapter.OnLongClickLi
     fastAdapter.withOnClickListener(new FastAdapter.OnClickListener<ListItem>() {
       @Override
       public boolean onClick(View v, IAdapter<ListItem> adapter, ListItem item, int position) {
-        openWebsiteDialog(item.getWebsite());
+//        openWebsiteDialog(item.getWebsite());
+        bottomsheet.setPeekSheetTranslation(1200);
+        bottomsheet.showWithSheetView(LayoutInflater.from(context).inflate(R.layout.bottomsheet_event_item, bottomsheet, false));
         return true;
       }
     });

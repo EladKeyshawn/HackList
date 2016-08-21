@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+  <ImageView
+      android:layout_width="match_parent"
+      android:layout_height="300dp"
+      android:layout_marginTop="-150dp"
+      android:src="@drawable/header_hackathons_bottom_sheet"/>
+
+
+  <ImageView
+      android:id="@+id/dialog_event_logo"
+      android:layout_width="100dp"
+      android:layout_height="100dp"
+      android:layout_centerHorizontal="true"
+      android:src="@mipmap/ic_launcher"/>
+
+  <TextView
+      android:id="@+id/bottom_sheet_description"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/dialog_event_logo"
+      android:layout_marginTop="30dp"
+      android:gravity="center"
+      android:text="This is the hackathons event
+      you can click below to star this event and track it
+      to get notified when you can apply or simply click 'apply' to enter
+      the hackathons website"
+      />
+
+
+  <LinearLayout
+      android:id="@+id/linearLayout"
+      android:layout_width="wrap_content"
+      android:layout_height="60dp"
+      android:layout_below="@id/bottom_sheet_description"
+      android:layout_marginTop="30dp"
+      android:orientation="horizontal"
+      android:layout_centerHorizontal="true"
+      android:gravity="center_vertical">
+
+
+    <Button
+        android:id="@+id/bottom_sheet_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:drawableTop="@drawable/ic_heart_unselected_bottomsheet"
+        android:text="save"
+        />
+
+
+    <Button
+        android:id="@+id/buttonok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:drawableTop="@drawable/ic_web_bottomsheet"
+        android:text="webview"/>
+
+    <Button
+        android:id="@+id/bottom_sheet_apply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:drawableTop="@drawable/ic_apply_bottomsheet"
+        android:text="apply"/>
+
+
+  </LinearLayout>
+
+
+</RelativeLayout>

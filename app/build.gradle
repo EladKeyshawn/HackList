@@ -33,6 +33,9 @@ dependencies {
         transitive = true
     }
 
+
+    compile 'com.afollestad.material-dialogs:core:0.8.6.2'
+
     compile 'com.github.satyan:sugar:1.4'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'io.reactivex:rxjava:1.0.+'
@@ -46,7 +49,9 @@ dependencies {
         transitive = true;
     }
 
-    compile 'com.yalantis:contextmenu:1.0.7'
+
+    compile 'com.cocosw:bottomsheet:1.+@aar'
+    compile 'com.flipboard:bottomsheet-core:1.5.1'
 
 
 }

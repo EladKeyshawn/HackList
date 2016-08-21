@@ -4,25 +4,36 @@
              android:layout_height="match_parent"
              tools:context=".fragments.FragmentHome">
 
-  <RelativeLayout
+  <com.flipboard.bottomsheet.BottomSheetLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent">
+      android:layout_height="match_parent"
+      android:id="@+id/fragment_home_bottomsheet">
 
-    <android.support.v7.widget.RecyclerView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:focusable="true"
-        android:clickable="true"
-        android:id="@+id/all_hackathons_list"
-        >
+        android:layout_height="match_parent">
+
+      <android.support.v7.widget.RecyclerView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:focusable="true"
+          android:clickable="true"
+          android:id="@+id/all_hackathons_list"
+          >
 
 
 
-    </android.support.v7.widget.RecyclerView>
+      </android.support.v7.widget.RecyclerView>
 
 
 
-  </RelativeLayout>
+    </RelativeLayout>
+
+
+  </com.flipboard.bottomsheet.BottomSheetLayout>
+
+
+
 
 
 

@@ -9,6 +9,12 @@
       app:showAsAction="never"/>
 
   <item
+      android:id="@+id/main_menu_action_bookmarks"
+      android:title="Bookmarks"
+      android:icon="@drawable/ic_star_yellow"
+      app:showAsAction="ifRoom"/>
+
+  <item
       android:id="@+id/main_menu_action_refine"
       android:icon="@drawable/ic_refine"
       android:title="Refine"

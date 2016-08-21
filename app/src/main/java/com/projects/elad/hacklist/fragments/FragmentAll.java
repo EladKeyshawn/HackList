@@ -140,14 +140,7 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
 
     searchBox = (SearchView) getActivity().findViewById(R.id.trip_search_edit);
     searchBox.clearFocus();
-    searchBox.setOnCloseListener(new SearchView.OnCloseListener() {
-      @Override
-      public boolean onClose() {
-        searchBox.clearFocus();
 
-        return true;
-      }
-    });
     searchBox.setOnQueryTextListener(this);
 
 

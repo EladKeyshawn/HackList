@@ -21,7 +21,7 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
   String year;
   String startDate;
   String endDate;
-
+  String website;
 
   String host;
   //  String location;
@@ -36,7 +36,7 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
 
 
   public ListItem(Context context, String title,String year, String startDate, String endDate, String host,
-                  String people, String duration, String travel, String prizes, String facebookUrl) {
+                  String people, String duration, String travel, String prizes, String facebookUrl, String website) {
     this.context = context;
     this.title = title;
     this.year = year;
@@ -47,10 +47,14 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
     this.duration = duration;
     this.travel = travel;
     this.prizes = prizes;
-
+    this.website = website;
     this.facebookUrl = facebookUrl;
   }
 
+
+  public String getWebsite() {
+    return website;
+  }
 
   public String getStartDate() {
     return startDate;

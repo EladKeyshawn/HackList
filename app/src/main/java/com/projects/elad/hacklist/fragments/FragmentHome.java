@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -14,6 +15,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
@@ -44,7 +48,7 @@ import rx.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentHome extends Fragment implements FastAdapter.OnClickListener, FastAdapter.OnLongClickListener, SearchView.OnQueryTextListener {
+public class FragmentHome extends Fragment implements  FastAdapter.OnLongClickListener, SearchView.OnQueryTextListener {
 
 
   @BindView(R.id.all_hackathons_list)
@@ -109,15 +113,21 @@ public class FragmentHome extends Fragment implements FastAdapter.OnClickListene
     eventsFromFeed = new ArrayList<>();
 
     fastAdapter = new FastItemAdapter();
-    fastAdapter.withSelectOnLongClick(true);
-    fastAdapter.withSelectable(true);
-    fastAdapter.withOnClickListener(this);
+    fastAdapter.withSelectOnLongClick(false);
+    fastAdapter.withSelectable(false);
     fastAdapter.withOnLongClickListener(this);
+    fastAdapter.withOnClickListener(new FastAdapter.OnClickListener<ListItem>() {
+      @Override
+      public boolean onClick(View v, IAdapter<ListItem> adapter, ListItem item, int position) {
+        openWebsiteDialog(item.getWebsite());
+        return true;
+      }
+    });
     fastAdapter.withFilterPredicate(new IItemAdapter.Predicate<ListItem>() {
       @Override
       public boolean filter(ListItem item, CharSequence constraint) {
 
-        if(constraint.toString().length() > 0){
+        if (constraint.toString().length() > 0) {
           switch (constraint.toString()) {
             case "travel":
               return item.getTravel().equals("no") || item.getTravel().equals("unknown");
@@ -144,7 +154,6 @@ public class FragmentHome extends Fragment implements FastAdapter.OnClickListene
     searchBox.setOnQueryTextListener(this);
 
 
-
     return ourView;
   }
 
@@ -166,11 +175,6 @@ public class FragmentHome extends Fragment implements FastAdapter.OnClickListene
     HackEventRetrievalCoordinator(currYear, currMonth);
 
 
-
-
-
-
-
   }
 
   private void buildRESTAdapter() {
@@ -184,10 +188,6 @@ public class FragmentHome extends Fragment implements FastAdapter.OnClickListene
   }
 
 
-  @Override
-  public boolean onClick(View v, IAdapter adapter, IItem item, int position) {
-    return false;
-  }
 
 
 
@@ -196,7 +196,7 @@ public class FragmentHome extends Fragment implements FastAdapter.OnClickListene
     String currentYear = String.valueOf(year);
     String currentMonth = UsefulFunctions.getStringForMonthInt(month);
 
-    getHackEventList(currentYear,currentMonth, year, month);
+    getHackEventList(currentYear, currentMonth, year, month);
 
   }
 
@@ -208,10 +208,10 @@ public class FragmentHome extends Fragment implements FastAdapter.OnClickListene
         .subscribe(new Subscriber<Map<String, List<HackEvent>>>() {
           @Override
           public void onCompleted() {
-              if(monthInt + 1 <= 11) {
-                int nextMonth = monthInt + 1;
-                HackEventRetrievalCoordinator(yearInt, nextMonth);
-              }
+            if (monthInt + 1 <= 11) {
+              int nextMonth = monthInt + 1;
+              HackEventRetrievalCoordinator(yearInt, nextMonth);
+            }
           }
 
           @Override
@@ -234,8 +234,9 @@ public class FragmentHome extends Fragment implements FastAdapter.OnClickListene
   private void addHackEventsToListAdapter(String year) {
     ArrayList tempItems = new ArrayList();
     for (HackEvent event : eventsFromFeed) {
-      ListItem item = new ListItem(context, event.getTitle(), year , event.getStartDate(), event.getEndDate(),
-          event.getHost(), event.getSize(), event.getLength(), event.getTravel(), event.getPrize(), event.getFacebookURL());
+      ListItem item = new ListItem(context, event.getTitle(), year, event.getStartDate(), event.getEndDate(),
+          event.getHost(), event.getSize(), event.getLength(),
+          event.getTravel(), event.getPrize(), event.getFacebookURL(), event.getUrl());
       tempItems.add(item);
     }
 
@@ -248,7 +249,6 @@ public class FragmentHome extends Fragment implements FastAdapter.OnClickListene
   }
 
 
-
   @Override
   public void onDestroyView() {
     super.onDestroyView();
@@ -256,7 +256,8 @@ public class FragmentHome extends Fragment implements FastAdapter.OnClickListene
 
   @Override
   public boolean onLongClick(View v, IAdapter adapter, IItem item, int position) {
-    return false;
+    Toast.makeText(context, "long click", Toast.LENGTH_SHORT).show();
+    return true;
   }
 
 
@@ -269,5 +270,26 @@ public class FragmentHome extends Fragment implements FastAdapter.OnClickListene
   public boolean onQueryTextChange(String newText) {
     fastAdapter.filter(newText);
     return true;
+  }
+
+
+  public void openWebsiteDialog(String url) {
+
+
+    WebView webview = (WebView) LayoutInflater.from(getContext()).inflate(R.layout.website_webview, null);
+    webview.loadUrl(url);
+    webview.setWebViewClient(new WebViewClient() {
+      @Override
+      public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        view.loadUrl(url);
+        return false;
+      }
+    });
+    AlertDialog mAlertDialog = new AlertDialog.Builder(getContext(), R.style.Theme_AppCompat_Light_Dialog_Alert)
+        .setView(webview)
+        .setPositiveButton(android.R.string.ok, null)
+        .show();
+
+
   }
 }

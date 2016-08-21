@@ -48,42 +48,48 @@ public class MainActivity extends AppCompatActivity {
 
     tabLayout = (TabLayout) findViewById(R.id.tabs);
     tabLayout.setupWithViewPager(viewPager);
+    tabLayout.getTabAt(1).setIcon(R.drawable.ic_star_unselected);
+    tabLayout.setOnTabSelectedListener(
+        new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
+
+          @Override
+          public void onTabSelected(TabLayout.Tab tab) {
+            super.onTabSelected(tab);
+            if (tab.getPosition() == 1){
+              tab.setIcon(R.drawable.ic_star_selected);
+            } else if (tab.getPosition() == 0) {
+              tab.setIcon(R.drawable.ic_home_selected);
+            }
+          }
+
+          @Override
+          public void onTabUnselected(TabLayout.Tab tab) {
+            super.onTabUnselected(tab);
+            if (tab.getPosition() == 1){
+              tab.setIcon(R.drawable.ic_star_unselected);
+            } else if (tab.getPosition() == 0) {
+              tab.setIcon(R.drawable.ic_home_unselected);
+            }
+
+          }
+
+          @Override
+          public void onTabReselected(TabLayout.Tab tab) {
+            super.onTabReselected(tab);
+          }
+        }
+    );
 
 
 
   }
 
-//** bullshit doesnt work! **//
 
-//  private void setUpRefineMenu() {
-//    MenuObject close = new MenuObject();
-//    close.setResource(R.drawable.ic_ok_tick);
-//
-//    MenuObject send = new MenuObject("Only Travel");
-//    send.setResource(R.drawable.ic_x_red);
-//
-//
-//
-//    List<MenuObject> menuObjects = new ArrayList<>();
-//    menuObjects.add(close);
-//    menuObjects.add(send);
-//
-//
-//
-//    MenuParams menuParams = new MenuParams();
-//    menuParams.setActionBarSize(toolbar.getHeight());
-//    menuParams.setMenuObjects(menuObjects);
-//    menuParams.setClosableOutside(true);
-//    // set other settings to meet your needs
-//    mMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams);
-//
-//
-//  }
 
   private void setupViewPager(ViewPager viewPager) {
     ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-    adapter.addFragment(new FragmentAll(), "ALL");
-    adapter.addFragment(new FragmentUpcoming(), "UPCOMING");
+    adapter.addFragment(new FragmentAll(), "");
+    adapter.addFragment(new FragmentUpcoming(), "");
     viewPager.setAdapter(adapter);
   }
 

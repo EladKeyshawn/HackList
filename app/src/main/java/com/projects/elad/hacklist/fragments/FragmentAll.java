@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,7 +44,7 @@ import rx.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentAll extends Fragment implements FastAdapter.OnClickListener, FastAdapter.OnLongClickListener {
+public class FragmentAll extends Fragment implements FastAdapter.OnClickListener, FastAdapter.OnLongClickListener, SearchView.OnQueryTextListener {
 
 
   @BindView(R.id.all_hackathons_list)
@@ -54,6 +55,8 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
   private List<HackEvent> eventsFromFeed;
   private ContextMenuDialogFragment mMenuDialogFragment;
   private HacklistApi serverInterface;
+  private SearchView searchBox;
+  private Menu ourOptionsMenu;
 
   public FragmentAll() {
     // Required empty public constructor
@@ -90,6 +93,7 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
   @Override
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     super.onCreateOptionsMenu(menu, inflater);
+    ourOptionsMenu = menu;
   }
 
   @Override
@@ -112,22 +116,40 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
     fastAdapter.withFilterPredicate(new IItemAdapter.Predicate<ListItem>() {
       @Override
       public boolean filter(ListItem item, CharSequence constraint) {
-        switch (constraint.toString()) {
-          case "travel":
-            return item.getTravel().equals("no") || item.getTravel().equals("unknown");
 
-          case "":
-            return true;
-          default:
-            return false;
+        if(constraint.toString().length() > 0){
+          switch (constraint.toString()) {
+            case "travel":
+              return item.getTravel().equals("no") || item.getTravel().equals("unknown");
 
+            default:
+//              ourOptionsMenu.getItem(R.id.action_travel_only).setChecked(false);
+              return !item.getTitle().toLowerCase().contains(constraint.toString().toLowerCase());
+
+          }
+        } else {
+          return true;
         }
+
 
       }
     });
 
     hackEventsList.setLayoutManager(new LinearLayoutManager(context));
     hackEventsList.setAdapter(fastAdapter);
+
+    searchBox = (SearchView) getActivity().findViewById(R.id.trip_search_edit);
+    searchBox.clearFocus();
+    searchBox.setOnCloseListener(new SearchView.OnCloseListener() {
+      @Override
+      public boolean onClose() {
+        searchBox.clearFocus();
+
+        return true;
+      }
+    });
+    searchBox.setOnQueryTextListener(this);
+
 
 
     return ourView;
@@ -245,4 +267,14 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
   }
 
 
+  @Override
+  public boolean onQueryTextSubmit(String query) {
+    return false;
+  }
+
+  @Override
+  public boolean onQueryTextChange(String newText) {
+    fastAdapter.filter(newText);
+    return true;
+  }
 }

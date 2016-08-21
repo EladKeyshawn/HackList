@@ -35,6 +35,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit.RestAdapter;
+import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -124,13 +125,62 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
 //    fastAdapter.add(listItems);
 
     Calendar calender = Calendar.getInstance();
-    String currYear = String.valueOf(calender.get(Calendar.YEAR));
-    String currentMonth = UsefulFunctions.getStringForMonthInt(calender.get(Calendar.MONTH));
 
 
+    class EventDate {
+      String year;
+      String month;
 
 
-    getHackEventList(currYear, currentMonth);
+      public EventDate(String year, String month) {
+        this.year = year;
+        this.month = month;
+      }
+
+      public String getYear() {
+        return year;
+      }
+
+      public String getMonth() {
+        return month;
+      }
+    }
+
+
+    ArrayList<EventDate> eventDates = new ArrayList<>();
+
+    int yearIndex = calender.get(Calendar.YEAR);
+
+
+    for (int year = yearIndex; year <= yearIndex + 1; year++){
+      for (int monthIndex = calender.get(Calendar.MONTH); monthIndex < 12; monthIndex++) {
+        String currYear = String.valueOf(year);
+        String currentMonth = UsefulFunctions.getStringForMonthInt(monthIndex);
+        EventDate dateInstance = new EventDate(currYear, currentMonth);
+        eventDates.add(dateInstance);
+        getHackEventList(currYear, currentMonth);
+      }
+    }
+
+//    Observable.from(eventDates)
+//        .subscribeOn(Schedulers.newThread())
+//        .observeOn(AndroidSchedulers.mainThread())
+//        .subscribe(new Subscriber<EventDate>() {
+//          @Override
+//          public void onCompleted() {
+//            addHackEventsToListAdapter();
+//          }
+//
+//          @Override
+//          public void onError(Throwable e) {
+//
+//          }
+//
+//          @Override
+//          public void onNext(EventDate eventDate) {
+//              getHackEventList(eventDate.getYear(), eventDate.getMonth());
+//          }
+//        });
 
 
   }
@@ -158,12 +208,12 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
 
   private void addHackEventsToListAdapter() {
     for (HackEvent event : eventsFromFeed) {
-//      boolean travel = event.getTravel().equals("yes");
-//      boolean prizes = event.getPrize().equals("yes");
       ListItem item = new ListItem(context, event.getTitle(), event.getStartDate(), event.getEndDate(),
           event.getHost(), event.getSize(), event.getLength(), event.getTravel(), event.getPrize(), event.getFacebookURL());
       fastAdapter.add(item);
     }
+
+    eventsFromFeed.clear();
 
   }
 
@@ -173,7 +223,7 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
   }
 
 
-  public void getHackEventList(String year, String month) { // remember to move to RxJava
+  public void getHackEventList(String year, String month) {
 
     RestAdapter restAdapter = new RestAdapter.Builder()
         .setLogLevel(RestAdapter.LogLevel.FULL)
@@ -189,7 +239,6 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
           @Override
           public void onCompleted() {
             addHackEventsToListAdapter();
-
           }
 
           @Override

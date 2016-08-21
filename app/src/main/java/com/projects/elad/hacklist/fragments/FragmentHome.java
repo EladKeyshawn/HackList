@@ -4,6 +4,7 @@ package com.projects.elad.hacklist.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.flipboard.bottomsheet.BottomSheetLayout;
@@ -48,7 +50,7 @@ import rx.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentHome extends Fragment implements  FastAdapter.OnLongClickListener, SearchView.OnQueryTextListener {
+public class FragmentHome extends Fragment implements  FastAdapter.OnLongClickListener, SearchView.OnQueryTextListener{
 
 
   @BindView(R.id.all_hackathons_list)
@@ -62,7 +64,7 @@ public class FragmentHome extends Fragment implements  FastAdapter.OnLongClickLi
   private HacklistApi serverInterface;
   private SearchView searchBox;
   private Menu ourOptionsMenu;
-
+  private ListItem bottomSheetEventItem = null;
   public FragmentHome() {
     // Required empty public constructor
   }
@@ -120,9 +122,7 @@ public class FragmentHome extends Fragment implements  FastAdapter.OnLongClickLi
     fastAdapter.withOnClickListener(new FastAdapter.OnClickListener<ListItem>() {
       @Override
       public boolean onClick(View v, IAdapter<ListItem> adapter, ListItem item, int position) {
-//        openWebsiteDialog(item.getWebsite());
-        bottomsheet.setPeekSheetTranslation(1200);
-        bottomsheet.showWithSheetView(LayoutInflater.from(context).inflate(R.layout.bottomsheet_event_item, bottomsheet, false));
+        popBottomSheet(item);
         return true;
       }
     });
@@ -158,6 +158,39 @@ public class FragmentHome extends Fragment implements  FastAdapter.OnLongClickLi
 
 
     return ourView;
+  }
+
+  private void popBottomSheet(final ListItem item) {
+    View.OnClickListener bottomSheetClickListener = new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        switch (view.getId()) {
+          case R.id.bottom_sheet_save:
+            //// TODO: implement save event to db
+            bottomsheet.dismissSheet();
+            Snackbar.make(view,"Saved", Snackbar.LENGTH_LONG).show();
+            break;
+          case R.id.bottom_sheet_webview:
+            bottomsheet.dismissSheet();
+            openWebsiteDialog(item.getWebsite());
+            break;
+          case R.id.bottom_sheet_apply:
+            bottomsheet.dismissSheet();
+            goToWebsiteOnBrowser();
+        }
+      }
+    };
+    bottomsheet.setPeekSheetTranslation(1200);
+    bottomsheet.showWithSheetView(LayoutInflater.from(context).inflate(R.layout.bottomsheet_event_item, bottomsheet, false));
+    Button saveBtn = (Button) bottomsheet.findViewById(R.id.bottom_sheet_save);
+    Button webviewBtn = (Button) bottomsheet.findViewById(R.id.bottom_sheet_webview);
+    Button applyButtn = (Button) bottomsheet.findViewById(R.id.bottom_sheet_apply);
+    saveBtn.setOnClickListener( bottomSheetClickListener);
+    webviewBtn.setOnClickListener(bottomSheetClickListener);
+    applyButtn.setOnClickListener(bottomSheetClickListener);
+  }
+
+  private void goToWebsiteOnBrowser() {
   }
 
 
@@ -295,4 +328,5 @@ public class FragmentHome extends Fragment implements  FastAdapter.OnLongClickLi
 
 
   }
+
 }

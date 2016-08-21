@@ -35,7 +35,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit.RestAdapter;
-import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -54,10 +53,32 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
   private ArrayList<ListItem> listItems;
   private List<HackEvent> eventsFromFeed;
   private ContextMenuDialogFragment mMenuDialogFragment;
+  private HacklistApi serverInterface;
 
   public FragmentAll() {
     // Required empty public constructor
   }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.action_travel_only: {
+        if (item.isChecked()) { // unchecking it now
+          item.setChecked(false);
+          // TODO: unapply filter
+          fastAdapter.filter("");
+        } else {
+          item.setChecked(true);
+          // TODO: apply filter
+          fastAdapter.filter("travel"); // filter out all that contain "no"
+        }
+        return true;
+      }
+      default:
+        return super.onOptionsItemSelected(item);
+    }
+  }
+
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,16 +112,16 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
     fastAdapter.withFilterPredicate(new IItemAdapter.Predicate<ListItem>() {
       @Override
       public boolean filter(ListItem item, CharSequence constraint) {
-            switch (constraint.toString()){
-              case "travel":
-                return item.getTravel().equals("no") || item.getTravel().equals("unknown") ;
+        switch (constraint.toString()) {
+          case "travel":
+            return item.getTravel().equals("no") || item.getTravel().equals("unknown");
 
-              case "":
-                return true;
-              default:
-                return false;
+          case "":
+            return true;
+          default:
+            return false;
 
-            }
+        }
 
       }
     });
@@ -122,80 +143,31 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
 //    listItems.add(new ListItem("MHacks", "17-18 aug", false));
 //    fastAdapter.add(listItems);
 
+    buildRESTAdapter();
+
     Calendar calender = Calendar.getInstance();
-
-
-    class EventDate {
-      String year;
-      String month;
-
-
-      public EventDate(String year, String month) {
-        this.year = year;
-        this.month = month;
-      }
-
-      public String getYear() {
-        return year;
-      }
-
-      public String getMonth() {
-        return month;
-      }
-    }
-
-
-    ArrayList<EventDate> eventDates = new ArrayList<>();
-
     int currYear = calender.get(Calendar.YEAR);
     int currMonth = calender.get(Calendar.MONTH);
-    for (int yearIndex = currYear; yearIndex <= currYear + 1; yearIndex++){
-      for (int monthIndex = 0; monthIndex < 12; monthIndex++) {
-        String currentYear = String.valueOf(yearIndex);
-        String currentMonth = UsefulFunctions.getStringForMonthInt(monthIndex);
-        EventDate dateInstance = new EventDate(currentYear, currentMonth);
-        if(!(yearIndex == currYear && monthIndex < currMonth)){
-          getHackEventList(currentYear, currentMonth, monthIndex);
-        }
-      }
-    }
+    HackEventRetrievalCoordinator(currYear, currMonth);
+
+
+
 
 
 
 
   }
 
+  private void buildRESTAdapter() {
+    RestAdapter restAdapter = new RestAdapter.Builder()
+        .setLogLevel(RestAdapter.LogLevel.FULL)
+        .setEndpoint(Constants.HACKALIST_BASE_URL)
+        .build();
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case R.id.action_travel_only: {
-        if (item.isChecked()) { // unchecking it now
-          item.setChecked(false);
-          // TODO: unapply filter
-          fastAdapter.filter("");
-        } else {
-          item.setChecked(true);
-          // TODO: apply filter
-          fastAdapter.filter("travel"); // filter out all that contain "no"
-        }
-        return true;
-      }
-      default:
-        return super.onOptionsItemSelected(item);
-    }
-  }
-
-  private void addHackEventsToListAdapter(String year, int month) {
-    for (HackEvent event : eventsFromFeed) {
-      ListItem item = new ListItem(context, event.getTitle(),year, month, event.getStartDate(), event.getEndDate(),
-          event.getHost(), event.getSize(), event.getLength(), event.getTravel(), event.getPrize(), event.getFacebookURL());
-      fastAdapter.add(item);
-    }
-
-    eventsFromFeed.clear();
+    serverInterface = restAdapter.create(HacklistApi.class);
 
   }
+
 
   @Override
   public boolean onClick(View v, IAdapter adapter, IItem item, int position) {
@@ -203,22 +175,28 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
   }
 
 
-  public void getHackEventList(final String year, final String month, final int monthInt) {
 
-    RestAdapter restAdapter = new RestAdapter.Builder()
-        .setLogLevel(RestAdapter.LogLevel.FULL)
-        .setEndpoint(Constants.HACKALIST_BASE_URL)
-        .build();
+  public void HackEventRetrievalCoordinator(int year, int month) {
 
+    String currentYear = String.valueOf(year);
+    String currentMonth = UsefulFunctions.getStringForMonthInt(month);
 
-    HacklistApi serverInterface = restAdapter.create(HacklistApi.class);
-    serverInterface.getMonthObject(year,month)
+    getHackEventList(currentYear,currentMonth, year, month);
+
+  }
+
+  public void getHackEventList(final String year, final String month, final int yearInt, final int monthInt) {
+
+    serverInterface.getMonthObject(year, month)
         .observeOn(AndroidSchedulers.mainThread())
         .subscribeOn(Schedulers.newThread())
         .subscribe(new Subscriber<Map<String, List<HackEvent>>>() {
           @Override
           public void onCompleted() {
-            addHackEventsToListAdapter(year, monthInt);
+              if(monthInt + 1 <= 11) {
+                int nextMonth = monthInt + 1;
+                HackEventRetrievalCoordinator(yearInt, nextMonth);
+              }
           }
 
           @Override
@@ -231,9 +209,29 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
             for (Map.Entry<String, List<HackEvent>> entry : stringListMap.entrySet()) {
               eventsFromFeed.addAll(entry.getValue());
             }
+
+            addHackEventsToListAdapter(year);
           }
         });
   }
+
+
+  private void addHackEventsToListAdapter(String year) {
+    ArrayList tempItems = new ArrayList();
+    for (HackEvent event : eventsFromFeed) {
+      ListItem item = new ListItem(context, event.getTitle(), year , event.getStartDate(), event.getEndDate(),
+          event.getHost(), event.getSize(), event.getLength(), event.getTravel(), event.getPrize(), event.getFacebookURL());
+      tempItems.add(item);
+    }
+
+
+    fastAdapter.add(tempItems);
+
+    tempItems.clear();
+    eventsFromFeed.clear();
+
+  }
+
 
 
   @Override

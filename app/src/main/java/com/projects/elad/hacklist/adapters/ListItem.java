@@ -17,7 +17,6 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
 
 
   Context context;
-  int month;
   String title;
   String year;
   String startDate;
@@ -36,12 +35,11 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
   String facebookUrl;
 
 
-  public ListItem(Context context, String title,String year, int month, String startDate, String endDate, String host,
+  public ListItem(Context context, String title,String year, String startDate, String endDate, String host,
                   String people, String duration, String travel, String prizes, String facebookUrl) {
     this.context = context;
     this.title = title;
     this.year = year;
-    this.month = month;
     this.startDate = startDate;
     this.endDate = endDate;
     this.host = host;

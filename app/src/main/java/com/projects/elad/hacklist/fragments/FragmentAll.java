@@ -24,9 +24,11 @@ import com.projects.elad.hacklist.adapters.HackEvent;
 import com.projects.elad.hacklist.adapters.HacklistApi;
 import com.projects.elad.hacklist.adapters.ListItem;
 import com.projects.elad.hacklist.utils.Constants;
+import com.projects.elad.hacklist.utils.UsefulFunctions;
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -121,7 +123,14 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
 //    listItems.add(new ListItem("MHacks", "17-18 aug", false));
 //    fastAdapter.add(listItems);
 
-    getHackEventList();
+    Calendar calender = Calendar.getInstance();
+    String currYear = String.valueOf(calender.get(Calendar.YEAR));
+    String currentMonth = UsefulFunctions.getStringForMonthInt(calender.get(Calendar.MONTH));
+
+
+
+
+    getHackEventList(currYear, currentMonth);
 
 
   }
@@ -164,7 +173,7 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
   }
 
 
-  public void getHackEventList() { // remember to move to RxJava
+  public void getHackEventList(String year, String month) { // remember to move to RxJava
 
     RestAdapter restAdapter = new RestAdapter.Builder()
         .setLogLevel(RestAdapter.LogLevel.FULL)
@@ -173,7 +182,7 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
 
 
     HacklistApi serverInterface = restAdapter.create(HacklistApi.class);
-    serverInterface.getMonthObject("2016", "02")
+    serverInterface.getMonthObject(year,month)
         .observeOn(AndroidSchedulers.mainThread())
         .subscribeOn(Schedulers.newThread())
         .subscribe(new Subscriber<Map<String, List<HackEvent>>>() {

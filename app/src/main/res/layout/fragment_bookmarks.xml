@@ -1,0 +1,46 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".fragments.FragmentBookmarks">
+
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/fragment_bookmarks_none_logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/bookmarks_default_logo"
+        android:layout_marginTop="121dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
+
+
+    <TextView
+        android:id="@+id/fragment_bookmarks_none_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Bookmarks"
+        android:layout_below="@id/fragment_bookmarks_none_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:textSize="30sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_bookmarks_content"
+        android:layout_below="@id/fragment_bookmarks_none_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:textSize="20sp"
+        android:gravity="center"/>
+
+
+  </RelativeLayout>
+
+
+</FrameLayout>

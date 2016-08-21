@@ -44,7 +44,7 @@ import rx.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentAll extends Fragment implements FastAdapter.OnClickListener, FastAdapter.OnLongClickListener, SearchView.OnQueryTextListener {
+public class FragmentHome extends Fragment implements FastAdapter.OnClickListener, FastAdapter.OnLongClickListener, SearchView.OnQueryTextListener {
 
 
   @BindView(R.id.all_hackathons_list)
@@ -58,7 +58,7 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
   private SearchView searchBox;
   private Menu ourOptionsMenu;
 
-  public FragmentAll() {
+  public FragmentHome() {
     // Required empty public constructor
   }
 
@@ -101,7 +101,7 @@ public class FragmentAll extends Fragment implements FastAdapter.OnClickListener
                            Bundle savedInstanceState) {
     context = super.getActivity();
 
-    View ourView = inflater.inflate(R.layout.fragment_view_all, container, false);
+    View ourView = inflater.inflate(R.layout.fragment_home, container, false);
     ButterKnife.bind(this, ourView);
 
     listItems = new ArrayList<>();

@@ -11,11 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.projects.elad.hacklist.fragments.FragmentAll;
-import com.projects.elad.hacklist.fragments.FragmentUpcoming;
-import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
-import com.yalantis.contextmenu.lib.MenuObject;
-import com.yalantis.contextmenu.lib.MenuParams;
+import com.projects.elad.hacklist.fragments.FragmentHome;
+import com.projects.elad.hacklist.fragments.FragmentBookmarks;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     tabLayout = (TabLayout) findViewById(R.id.tabs);
     tabLayout.setupWithViewPager(viewPager);
+    tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_selected);
     tabLayout.getTabAt(1).setIcon(R.drawable.ic_star_unselected);
     tabLayout.setOnTabSelectedListener(
         new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
@@ -88,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
 
   private void setupViewPager(ViewPager viewPager) {
     ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-    adapter.addFragment(new FragmentAll(), "");
-    adapter.addFragment(new FragmentUpcoming(), "");
+    adapter.addFragment(new FragmentHome(), "");
+    adapter.addFragment(new FragmentBookmarks(), "");
     viewPager.setAdapter(adapter);
   }
 

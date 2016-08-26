@@ -14,6 +14,5 @@ public interface HacklistApi {
   @GET("/{YEAR}/{MONTH}.json")
   Observable<Map<String, List<HackEvent>>> getMonthObject(@Path("YEAR") String year, @Path("MONTH") String month);
 
-//    Observable<MonthObject> getMonthObject(@Path("YEAR") String year, @Path("MONTH") String month);
 
 }

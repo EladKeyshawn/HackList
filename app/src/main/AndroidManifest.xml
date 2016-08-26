@@ -14,7 +14,7 @@
 
     <meta-data
         android:name="VERSION"
-        android:value="1"/>
+        android:value="2"/>
     <meta-data
         android:name="DOMAIN_PACKAGE_NAME"
         android:value="com.projects.elad.hacklist.db"/>

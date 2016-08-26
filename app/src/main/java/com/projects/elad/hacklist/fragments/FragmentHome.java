@@ -31,6 +31,7 @@ import com.projects.elad.hacklist.R;
 import com.projects.elad.hacklist.adapters.HackEvent;
 import com.projects.elad.hacklist.adapters.HacklistApi;
 import com.projects.elad.hacklist.adapters.ListItem;
+import com.projects.elad.hacklist.db.EventBookmark;
 import com.projects.elad.hacklist.utils.Constants;
 import com.projects.elad.hacklist.utils.UsefulFunctions;
 
@@ -168,6 +169,8 @@ public class FragmentHome extends Fragment implements  FastAdapter.OnLongClickLi
           case R.id.bottom_sheet_save:
             //// TODO: implement save event to db
             bottomsheet.dismissSheet();
+            EventBookmark newRecord = new EventBookmark(item.getTitle(), item);
+            newRecord.save();
             Snackbar.make(view,"Saved", Snackbar.LENGTH_LONG).show();
             break;
           case R.id.bottom_sheet_webview:

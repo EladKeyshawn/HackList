@@ -2,6 +2,7 @@ package com.projects.elad.hacklist.fragments;
 
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -123,7 +124,11 @@ public class FragmentHome extends Fragment implements  FastAdapter.OnLongClickLi
     fastAdapter.withOnClickListener(new FastAdapter.OnClickListener<ListItem>() {
       @Override
       public boolean onClick(View v, IAdapter<ListItem> adapter, ListItem item, int position) {
-        popBottomSheet(item);
+        boolean itemSaved = false;
+        if (isEventSaved(item.getTitle())){
+          itemSaved = true;
+        }
+        popBottomSheet(item, itemSaved);
         return true;
       }
     });
@@ -161,7 +166,12 @@ public class FragmentHome extends Fragment implements  FastAdapter.OnLongClickLi
     return ourView;
   }
 
-  private void popBottomSheet(final ListItem item) {
+  private boolean isEventSaved(String title) {
+    ArrayList<EventBookmark> bookmark = (ArrayList<EventBookmark>) EventBookmark.find(EventBookmark.class, "event_title = ?", title);
+    return !(bookmark.size() == 0);
+  }
+
+  private void popBottomSheet(final ListItem item, boolean itemSaved) {
     View.OnClickListener bottomSheetClickListener = new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -188,6 +198,9 @@ public class FragmentHome extends Fragment implements  FastAdapter.OnLongClickLi
     Button saveBtn = (Button) bottomsheet.findViewById(R.id.bottom_sheet_save);
     Button webviewBtn = (Button) bottomsheet.findViewById(R.id.bottom_sheet_webview);
     Button applyButtn = (Button) bottomsheet.findViewById(R.id.bottom_sheet_apply);
+    if (itemSaved) {
+      saveBtn.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_heart_selected_bottomsheet,0,0);
+    }
     saveBtn.setOnClickListener( bottomSheetClickListener);
     webviewBtn.setOnClickListener(bottomSheetClickListener);
     applyButtn.setOnClickListener(bottomSheetClickListener);

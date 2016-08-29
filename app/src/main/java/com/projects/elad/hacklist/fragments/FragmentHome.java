@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.flipboard.bottomsheet.BottomSheetLayout;
@@ -35,6 +36,7 @@ import com.projects.elad.hacklist.adapters.ListItem;
 import com.projects.elad.hacklist.db.EventBookmark;
 import com.projects.elad.hacklist.utils.Constants;
 import com.projects.elad.hacklist.utils.UsefulFunctions;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -195,12 +197,18 @@ public class FragmentHome extends Fragment implements  FastAdapter.OnLongClickLi
     };
     bottomsheet.setPeekSheetTranslation(1200);
     bottomsheet.showWithSheetView(LayoutInflater.from(context).inflate(R.layout.bottomsheet_event_item, bottomsheet, false));
+    ImageView eventPic = (ImageView) bottomsheet.findViewById(R.id.bottom_sheet_event_logo);
     Button saveBtn = (Button) bottomsheet.findViewById(R.id.bottom_sheet_save);
     Button webviewBtn = (Button) bottomsheet.findViewById(R.id.bottom_sheet_webview);
     Button applyButtn = (Button) bottomsheet.findViewById(R.id.bottom_sheet_apply);
     if (itemSaved) {
       saveBtn.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_heart_selected_bottomsheet,0,0);
     }
+
+    Picasso.with(context)
+        .load(item.getFacebookProfileLink())
+        .placeholder(R.mipmap.ic_launcher)
+        .into(eventPic);
     saveBtn.setOnClickListener( bottomSheetClickListener);
     webviewBtn.setOnClickListener(bottomSheetClickListener);
     applyButtn.setOnClickListener(bottomSheetClickListener);

@@ -22,7 +22,7 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
   String startDate;
   String endDate;
   String website;
-
+  String facebookProfileLink;
   String host;
   //  String location;
   String people;
@@ -35,7 +35,7 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
   String facebookUrl;
 
 
-  public ListItem(Context context, String title,String year, String startDate, String endDate, String host,
+  public ListItem(Context context, String title, String year, String startDate, String endDate, String host,
                   String people, String duration, String travel, String prizes, String facebookUrl, String website) {
     this.context = context;
     this.title = title;
@@ -49,8 +49,14 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
     this.prizes = prizes;
     this.website = website;
     this.facebookUrl = facebookUrl;
+    facebookProfileLink = Constants.FACEBOOK_API_GET_PAGE_PICTURE + UsefulFunctions.getPageIdFromUrl(facebookUrl);
+
   }
 
+
+  public String getFacebookProfileLink() {
+    return facebookProfileLink;
+  }
 
   public String getWebsite() {
     return website;
@@ -91,7 +97,9 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
     return prizes;
   }
 
-  public String getFacebookUrl() { return facebookUrl; }
+  public String getFacebookUrl() {
+    return facebookUrl;
+  }
 
   /*   Here starts fast adapter implementation   */
 
@@ -142,49 +150,46 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
         break;
     }
 
-    String linkToPagePic = Constants.FACEBOOK_API_GET_PAGE_PICTURE + UsefulFunctions.getPageIdFromUrl(getFacebookUrl());
+
     Picasso.with(context)
-//        .load("https://hackthenorth.com/2014/img/logo.png")
-        .load(linkToPagePic)
+        //        .load("https://hackthenorth.com/2014/img/logo.png")
+        .load(facebookProfileLink)
         .placeholder(R.mipmap.ic_launcher)
         .into(holder.profile);
 
+
   }
+    protected static class ViewHolder extends RecyclerView.ViewHolder {
+      TextView title;
+      TextView year;
+      TextView startDate;
+      TextView endDate;
+      TextView host;
+      //    TextView location;
+      TextView people;
+      TextView duration;
+
+      ImageView travelIcon;
+      ImageView prizesIcon;
+      ImageView profile;
 
 
+      public ViewHolder(View itemView) {
+        super(itemView);
 
+        title = (TextView) itemView.findViewById(R.id.list_item_title);
+        startDate = (TextView) itemView.findViewById(R.id.list_item_start_date);
+        endDate = (TextView) itemView.findViewById(R.id.list_item_end_date);
+        host = (TextView) itemView.findViewById(R.id.list_item_host);
+        year = (TextView) itemView.findViewById(R.id.list_item_year);
+        travelIcon = (ImageView) itemView.findViewById(R.id.list_item_travel_tick);
+        prizesIcon = (ImageView) itemView.findViewById(R.id.list_item_prize_tick);
+        people = (TextView) itemView.findViewById(R.id.list_item_size);
+        duration = (TextView) itemView.findViewById(R.id.list_item_length);
+        profile = (ImageView) itemView.findViewById(R.id.list_item_icon);
 
-  protected static class ViewHolder extends RecyclerView.ViewHolder {
-    TextView title;
-    TextView year;
-    TextView startDate;
-    TextView endDate;
-    TextView host;
-    //    TextView location;
-    TextView people;
-    TextView duration;
-
-    ImageView travelIcon;
-    ImageView prizesIcon;
-    ImageView profile;
-
-
-    public ViewHolder(View itemView) {
-      super(itemView);
-
-      title = (TextView) itemView.findViewById(R.id.list_item_title);
-      startDate = (TextView) itemView.findViewById(R.id.list_item_start_date);
-      endDate = (TextView) itemView.findViewById(R.id.list_item_end_date);
-      host = (TextView) itemView.findViewById(R.id.list_item_host);
-      year = (TextView) itemView.findViewById(R.id.list_item_year);
-      travelIcon = (ImageView) itemView.findViewById(R.id.list_item_travel_tick);
-      prizesIcon = (ImageView) itemView.findViewById(R.id.list_item_prize_tick);
-      people = (TextView) itemView.findViewById(R.id.list_item_size);
-      duration = (TextView) itemView.findViewById(R.id.list_item_length);
-      profile = (ImageView) itemView.findViewById(R.id.list_item_icon);
-
+      }
     }
+
+
   }
-
-
-}

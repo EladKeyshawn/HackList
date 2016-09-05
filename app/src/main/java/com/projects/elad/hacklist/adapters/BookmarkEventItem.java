@@ -25,6 +25,19 @@ public class BookmarkEventItem extends AbstractItem<BookmarkEventItem, BookmarkE
     this.context = context;
   }
 
+
+  public String getBookmarkTitle() {
+    return bookmarkTitle;
+  }
+
+  public String getEventFacebookUrl() {
+    return eventFacebookUrl;
+  }
+
+  public Context getContext() {
+    return context;
+  }
+
   @Override
   public int getType() {
     return 0;

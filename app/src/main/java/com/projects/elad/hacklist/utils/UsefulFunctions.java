@@ -18,8 +18,17 @@ public class UsefulFunctions {
 
   public static String getPageIdFromUrl (String url) {
 
+    StringBuilder resultUrl = new StringBuilder();
+    resultUrl.append(Constants.FACEBOOK_API_GET_PAGE_PICTURE);
     int slashIndex = url.lastIndexOf('/');
 
-    return url.substring(slashIndex + 1) + "/picture?type=large";
+    resultUrl.append( url.substring(slashIndex + 1)).append("/picture?type=large");
+
+    return resultUrl.toString();
+
+
+//    int slashIndex = url.lastIndexOf('/');
+//
+//    return url.substring(slashIndex + 1) + "/picture?type=large";
   }
 }

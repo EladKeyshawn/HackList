@@ -6,7 +6,9 @@ import com.projects.elad.hacklist.adapters.ListItem;
 
 public class EventBookmark extends SugarRecord {
   String eventTitle;
+  String facebookUrl;
   ListItem eventObj;
+
 
   public EventBookmark () {
 
@@ -15,6 +17,7 @@ public class EventBookmark extends SugarRecord {
   public EventBookmark(String eventTitle, ListItem eventObj) {
     this.eventTitle = eventTitle;
     this.eventObj = eventObj;
+    this.facebookUrl = eventObj.getFacebookUrl();
   }
 
   public String getEventTitle() {
@@ -24,4 +27,9 @@ public class EventBookmark extends SugarRecord {
   public ListItem getEventObj() {
     return eventObj;
   }
+
+  public String getFacebookUrl() {
+    return facebookUrl;
+  }
+
 }

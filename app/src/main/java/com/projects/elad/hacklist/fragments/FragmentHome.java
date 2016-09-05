@@ -179,7 +179,6 @@ public class FragmentHome extends Fragment implements  FastAdapter.OnLongClickLi
       public void onClick(View view) {
         switch (view.getId()) {
           case R.id.bottom_sheet_save:
-            //// TODO: implement save event to db
             bottomsheet.dismissSheet();
             EventBookmark newRecord = new EventBookmark(item.getTitle(), item);
             newRecord.save();

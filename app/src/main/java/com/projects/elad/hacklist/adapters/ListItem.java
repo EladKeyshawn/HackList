@@ -49,7 +49,7 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
     this.prizes = prizes;
     this.website = website;
     this.facebookUrl = facebookUrl;
-    facebookProfileLink = Constants.FACEBOOK_API_GET_PAGE_PICTURE + UsefulFunctions.getPageIdFromUrl(facebookUrl);
+//    facebookProfileLink = Constants.FACEBOOK_API_GET_PAGE_PICTURE + UsefulFunctions.getPageIdFromUrl(facebookUrl);
 
   }
 
@@ -153,7 +153,7 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
 
     Picasso.with(context)
         //        .load("https://hackthenorth.com/2014/img/logo.png")
-        .load(facebookProfileLink)
+        .load(UsefulFunctions.getPageIdFromUrl(facebookUrl))
         .placeholder(R.mipmap.ic_launcher)
         .into(holder.profile);
 

@@ -72,7 +72,7 @@ public class FragmentBookmarks extends Fragment {
 
   private void addBookmarksToAdapter(ArrayList<EventBookmark> bookmarks) {
     for(EventBookmark bookmark : bookmarks) {
-      BookmarkEventItem newListItem = new BookmarkEventItem(bookmark.getEventTitle());
+      BookmarkEventItem newListItem = new BookmarkEventItem(context,bookmark);
       fastAdapter.add(newListItem);
     }
 

@@ -204,8 +204,9 @@ public class FragmentHome extends Fragment implements  FastAdapter.OnLongClickLi
       saveBtn.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_heart_selected_bottomsheet,0,0);
     }
 
+    String logoLink = UsefulFunctions.getPageIdFromUrl(item.getFacebookUrl());
     Picasso.with(context)
-        .load(item.getFacebookProfileLink())
+        .load(logoLink)
         .placeholder(R.mipmap.ic_launcher)
         .into(eventPic);
     saveBtn.setOnClickListener( bottomSheetClickListener);

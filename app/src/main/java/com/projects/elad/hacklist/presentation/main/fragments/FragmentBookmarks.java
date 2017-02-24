@@ -1,4 +1,4 @@
-package com.projects.elad.hacklist.fragments;
+package com.projects.elad.hacklist.presentation.main.fragments;
 
 
 import android.graphics.Color;

@@ -1,10 +1,4 @@
-package com.projects.elad.hacklist.utils;
-
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.os.Build;
-import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
+package com.projects.elad.hacklist.util;
 
 /**
  * Created by Elad on 8/14/2016.

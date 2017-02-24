@@ -21,6 +21,12 @@ android {
 }
 
 dependencies {
+
+    final DAGGER_VERSION = '2.5'
+
+    def daggerCompiler = "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
+
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.0.0-beta1'
@@ -32,25 +38,35 @@ dependencies {
         transitive = true
     }
 
-
+    // design dependencies
     compile 'com.afollestad.material-dialogs:core:0.8.6.2'
-
-    compile 'com.github.satyan:sugar:1.4'
-    compile 'com.squareup.retrofit:retrofit:1.9.0'
-    compile 'io.reactivex:rxjava:1.0.+'
-    compile 'io.reactivex:rxandroid:0.23.+'
-
-    compile 'com.jakewharton:butterknife:8.2.1'
-    apt 'com.jakewharton:butterknife-compiler:8.2.1'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-
+    compile 'com.cocosw:bottomsheet:1.+@aar'
+    compile 'com.flipboard:bottomsheet-core:1.5.1'
     compile('com.github.ozodrukh:CircularReveal:1.1.1@aar') {
         transitive = true;
     }
 
+    // local db service
+    compile 'com.github.satyan:sugar:1.4'
+    //network services
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 
-    compile 'com.cocosw:bottomsheet:1.+@aar'
-    compile 'com.flipboard:bottomsheet-core:1.5.1'
+    // reactive programming
+    compile 'io.reactivex:rxjava:1.0.+'
+    compile 'io.reactivex:rxandroid:0.23.+'
+
+    // dependency injection
+    compile 'com.jakewharton:butterknife:8.2.1'
+    apt 'com.jakewharton:butterknife-compiler:8.2.1'
+    compile  "com.google.dagger:dagger:$DAGGER_VERSION"
+    provided 'org.glassfish:javax.annotation:10.0-b28' //Required by Dagger2
+    annotationProcessor daggerCompiler
+    testAnnotationProcessor daggerCompiler
+    androidTestAnnotationProcessor daggerCompiler
+
+
+
 
 
 }

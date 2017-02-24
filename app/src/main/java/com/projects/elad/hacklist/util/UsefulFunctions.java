@@ -1,4 +1,4 @@
-package com.projects.elad.hacklist.utils;
+package com.projects.elad.hacklist.util;
 
 
 public class UsefulFunctions {

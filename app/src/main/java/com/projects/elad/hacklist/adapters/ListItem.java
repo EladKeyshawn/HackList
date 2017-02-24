@@ -9,187 +9,194 @@ import android.widget.TextView;
 
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.projects.elad.hacklist.R;
-import com.projects.elad.hacklist.utils.Constants;
-import com.projects.elad.hacklist.utils.UsefulFunctions;
+import com.projects.elad.hacklist.util.UsefulFunctions;
 import com.squareup.picasso.Picasso;
 
 public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
 
 
-  Context context;
-  String title;
-  String year;
-  String startDate;
-  String endDate;
-  String website;
-  String facebookProfileLink;
-  String host;
-  //  String location;
-  String people;
-  String duration;
+    Context context;
+    String title;
+    String year;
+    String startDate;
+    String endDate;
+    String website;
+    String facebookProfileLink;
+    String host;
+    //  String location;
+    String people;
+    String duration;
 
 
-  String travel;
-  String prizes;
+    String travel;
+    String prizes;
 
-  String facebookUrl;
+    String facebookUrl;
 
 
-  public ListItem(Context context, String title, String year, String startDate, String endDate, String host,
-                  String people, String duration, String travel, String prizes, String facebookUrl, String website) {
-    this.context = context;
-    this.title = title;
-    this.year = year;
-    this.startDate = startDate;
-    this.endDate = endDate;
-    this.host = host;
-    this.people = people;
-    this.duration = duration;
-    this.travel = travel;
-    this.prizes = prizes;
-    this.website = website;
-    this.facebookUrl = facebookUrl;
+    public ListItem(Context context, String title, String year, String startDate, String endDate, String host,
+                    String people, String duration, String travel, String prizes, String facebookUrl, String website) {
+        this.context = context;
+        this.title = title;
+        this.year = year;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.host = host;
+        this.people = people;
+        this.duration = duration;
+        this.travel = travel;
+        this.prizes = prizes;
+        this.website = website;
+        this.facebookUrl = facebookUrl;
 //    facebookProfileLink = Constants.FACEBOOK_API_GET_PAGE_PICTURE + UsefulFunctions.getPageIdFromUrl(facebookUrl);
 
-  }
+    }
 
 
-  public String getFacebookProfileLink() {
-    return facebookProfileLink;
-  }
+    public String getFacebookProfileLink() {
+        return facebookProfileLink;
+    }
 
-  public String getWebsite() {
-    return website;
-  }
+    public String getWebsite() {
+        return website;
+    }
 
-  public String getStartDate() {
-    return startDate;
-  }
+    public String getStartDate() {
+        return startDate;
+    }
 
-  public String getEndDate() {
-    return endDate;
-  }
+    public String getEndDate() {
+        return endDate;
+    }
 
-  public String getTitle() {
-    return title;
-  }
+    public String getTitle() {
+        return title;
+    }
 
-  public String getTravel() {
-    return travel;
-  }
-
-
-  public String getHost() {
-    return host;
-  }
+    public String getTravel() {
+        return travel;
+    }
 
 
-  public String getPeople() {
-    return people;
-  }
-
-  public String getDuration() {
-    return duration;
-  }
+    public String getHost() {
+        return host;
+    }
 
 
-  public String getPrizes() {
-    return prizes;
-  }
+    public String getPeople() {
+        return people;
+    }
 
-  public String getFacebookUrl() {
-    return facebookUrl;
-  }
+    public String getDuration() {
+        return duration;
+    }
+
+
+    public String getPrizes() {
+        return prizes;
+    }
+
+    public String getFacebookUrl() {
+        return facebookUrl;
+    }
 
   /*   Here starts fast adapter implementation   */
 
-  @Override
-  public int getType() {
-    return 0;
-  }
+    @Override
+    public int getType() {
+        return 0;
+    }
 
-  @Override
-  public int getLayoutRes() {
-    return R.layout.list_card_item;
-  }
+    @Override
+    public int getLayoutRes() {
+        return R.layout.list_card_item;
+    }
 
-  @Override
-  public void bindView(ListItem.ViewHolder holder) {
-    super.bindView(holder);
+    @Override
+    public void bindView(ListItem.ViewHolder holder) {
+        super.bindView(holder);
 
-    holder.title.setText(getTitle());
-    holder.startDate.setText(getStartDate());
-    holder.endDate.setText(getEndDate());
-    holder.host.setText(getHost());
+        holder.title.setText(getTitle());
+        holder.startDate.setText(getStartDate());
+        holder.endDate.setText(getEndDate());
+        holder.host.setText(getHost());
 //    holder.location.setText(getLocation());
-    holder.people.setText(getPeople());
-    holder.duration.setText(getDuration());
-    holder.year.setText("- " + year);
+        holder.people.setText(getPeople());
+        holder.duration.setText(getDuration());
+        holder.year.setText("- " + year);
 
 
-    switch (travel) {
-      case "no":
-        holder.travelIcon.setImageResource(R.drawable.ic_x_red);
-        break;
-      case "unknown":
-        holder.travelIcon.setImageResource(R.drawable.ic_question);
-        break;
-      case "yes":
-        holder.travelIcon.setImageResource(R.drawable.ic_ok_tick);
-        break;
+        switch (travel) {
+            case "no":
+                holder.travelIcon.setImageResource(R.drawable.ic_x_red);
+                break;
+            case "unknown":
+                holder.travelIcon.setImageResource(R.drawable.ic_question);
+                break;
+            case "yes":
+                holder.travelIcon.setImageResource(R.drawable.ic_ok_tick);
+                break;
+        }
+        switch (getPrizes()) {
+            case "no":
+                holder.prizesIcon.setImageResource(R.drawable.ic_x_red);
+                break;
+            case "unknown":
+                holder.prizesIcon.setImageResource(R.drawable.ic_question);
+                break;
+            case "yes":
+                holder.prizesIcon.setImageResource(R.drawable.ic_ok_tick);
+                break;
+        }
+
+
+        Picasso.with(context)
+                .load(UsefulFunctions.getPageIdFromUrl(facebookUrl))
+                .placeholder(R.mipmap.ic_launcher)
+                .into(holder.profile);
+
+
     }
-    switch (getPrizes()) {
-      case "no":
-        holder.prizesIcon.setImageResource(R.drawable.ic_x_red);
-        break;
-      case "unknown":
-        holder.prizesIcon.setImageResource(R.drawable.ic_question);
-        break;
-      case "yes":
-        holder.prizesIcon.setImageResource(R.drawable.ic_ok_tick);
-        break;
-    }
 
-
-    Picasso.with(context)
-        //        .load("https://hackthenorth.com/2014/img/logo.png")
-        .load(UsefulFunctions.getPageIdFromUrl(facebookUrl))
-        .placeholder(R.mipmap.ic_launcher)
-        .into(holder.profile);
-
-
-  }
     protected static class ViewHolder extends RecyclerView.ViewHolder {
-      TextView title;
-      TextView year;
-      TextView startDate;
-      TextView endDate;
-      TextView host;
-      //    TextView location;
-      TextView people;
-      TextView duration;
+        TextView title;
+        TextView year;
+        TextView startDate;
+        TextView endDate;
+        TextView host;
+        //    TextView location;
+        TextView people;
+        TextView duration;
 
-      ImageView travelIcon;
-      ImageView prizesIcon;
-      ImageView profile;
+        ImageView travelIcon;
+        ImageView prizesIcon;
+        ImageView profile;
 
 
-      public ViewHolder(View itemView) {
-        super(itemView);
+        public ViewHolder(View itemView) {
+            super(itemView);
 
-        title = (TextView) itemView.findViewById(R.id.list_item_title);
-        startDate = (TextView) itemView.findViewById(R.id.list_item_start_date);
-        endDate = (TextView) itemView.findViewById(R.id.list_item_end_date);
-        host = (TextView) itemView.findViewById(R.id.list_item_host);
-        year = (TextView) itemView.findViewById(R.id.list_item_year);
-        travelIcon = (ImageView) itemView.findViewById(R.id.list_item_travel_tick);
-        prizesIcon = (ImageView) itemView.findViewById(R.id.list_item_prize_tick);
-        people = (TextView) itemView.findViewById(R.id.list_item_size);
-        duration = (TextView) itemView.findViewById(R.id.list_item_length);
-        profile = (ImageView) itemView.findViewById(R.id.list_item_icon);
+            title = (TextView) itemView.findViewById(R.id.list_item_title);
+            startDate = (TextView) itemView.findViewById(R.id.list_item_start_date);
+            endDate = (TextView) itemView.findViewById(R.id.list_item_end_date);
+            host = (TextView) itemView.findViewById(R.id.list_item_host);
+            year = (TextView) itemView.findViewById(R.id.list_item_year);
+            travelIcon = (ImageView) itemView.findViewById(R.id.list_item_travel_tick);
+            prizesIcon = (ImageView) itemView.findViewById(R.id.list_item_prize_tick);
+            people = (TextView) itemView.findViewById(R.id.list_item_size);
+            duration = (TextView) itemView.findViewById(R.id.list_item_length);
+            profile = (ImageView) itemView.findViewById(R.id.list_item_icon);
 
-      }
+        }
     }
 
 
-  }
+    public static ListItem from(HackEvent event, Context context) {
+        return new ListItem(context, event.getTitle(), event.getYear(), event.getStartDate(), event.getEndDate(),
+                event.getHost(), event.getSize(), event.getLength(),
+                event.getTravel(), event.getPrize(), event.getFacebookURL(), event.getUrl());
+    }
+
+
+
+}

@@ -11,8 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.projects.elad.hacklist.fragments.FragmentHome;
-import com.projects.elad.hacklist.fragments.FragmentBookmarks;
+import com.projects.elad.hacklist.presentation.main.fragments.FragmentHome;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,16 +45,14 @@ public class MainActivity extends AppCompatActivity {
     tabLayout = (TabLayout) findViewById(R.id.tabs);
     tabLayout.setupWithViewPager(viewPager);
     tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_selected);
-    tabLayout.getTabAt(1).setIcon(R.drawable.ic_star_unselected);
+//    tabLayout.getTabAt(1).setIcon(R.drawable.ic_star_unselected);
     tabLayout.setOnTabSelectedListener(
         new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
 
           @Override
           public void onTabSelected(TabLayout.Tab tab) {
             super.onTabSelected(tab);
-            if (tab.getPosition() == 1){
-              tab.setIcon(R.drawable.ic_star_selected);
-            } else if (tab.getPosition() == 0) {
+             if (tab.getPosition() == 0) {
               tab.setIcon(R.drawable.ic_home_selected);
             }
           }
@@ -63,9 +60,7 @@ public class MainActivity extends AppCompatActivity {
           @Override
           public void onTabUnselected(TabLayout.Tab tab) {
             super.onTabUnselected(tab);
-            if (tab.getPosition() == 1){
-              tab.setIcon(R.drawable.ic_star_unselected);
-            } else if (tab.getPosition() == 0) {
+             if (tab.getPosition() == 0) {
               tab.setIcon(R.drawable.ic_home_unselected);
             }
 
@@ -87,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
   private void setupViewPager(ViewPager viewPager) {
     ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
     adapter.addFragment(new FragmentHome(), "");
-    adapter.addFragment(new FragmentBookmarks(), "");
     viewPager.setAdapter(adapter);
   }
 
@@ -127,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.main_menu_action_refine:
-//        mMenuDialogFragment.show(getSupportFragmentManager(), "ContextMenuDialogFragment");
         break;
     }
     return super.onOptionsItemSelected(item);

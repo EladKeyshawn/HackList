@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.projects.elad.hacklist.R;
 import com.projects.elad.hacklist.db.EventBookmark;
-import com.projects.elad.hacklist.utils.UsefulFunctions;
+import com.projects.elad.hacklist.util.UsefulFunctions;
 import com.squareup.picasso.Picasso;
 
 public class BookmarkEventItem extends AbstractItem<BookmarkEventItem, BookmarkEventItem.ViewHolder> {

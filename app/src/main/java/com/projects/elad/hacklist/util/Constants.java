@@ -1,4 +1,4 @@
-package com.projects.elad.hacklist.utils;
+package com.projects.elad.hacklist.util;
 
 /**
  * Created by Elad on 8/14/2016.

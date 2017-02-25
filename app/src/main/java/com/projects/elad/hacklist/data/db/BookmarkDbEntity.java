@@ -1,5 +1,7 @@
 package com.projects.elad.hacklist.data.db;
 
+import com.projects.elad.hacklist.presentation.main.adapters.ListItem;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -11,6 +13,15 @@ public class BookmarkDbEntity extends RealmObject {
     private String eventTitle;
     private String facebookUrl;
 
+
+    public BookmarkDbEntity() {
+
+    }
+
+    public BookmarkDbEntity(ListItem item) {
+        this.eventTitle = item.getTitle();
+        this.facebookUrl = item.getFacebookUrl();
+    }
 
 
     public String getEventTitle() {

@@ -7,6 +7,7 @@ import com.projects.elad.hacklist.HacklistApplication;
 import com.projects.elad.hacklist.data.remote.HackEvent;
 import com.projects.elad.hacklist.data.DataManager;
 import com.projects.elad.hacklist.presentation.base.BasePresenter;
+import com.projects.elad.hacklist.presentation.main.adapters.ListItem;
 import com.projects.elad.hacklist.presentation.main.fragments.FragmentHome;
 import com.projects.elad.hacklist.util.Mappers;
 import com.projects.elad.hacklist.util.RxUtil;
@@ -72,7 +73,6 @@ public class HomePresenter extends BasePresenter<HomeMvpView> {
                             .subscribe(new Subscriber<List<HackEvent>>() {
                                 @Override
                                 public void onCompleted() {
-                                    Toast.makeText(context, "Fetch events completed", Toast.LENGTH_SHORT).show();
                                 }
 
                                 @Override
@@ -89,6 +89,16 @@ public class HomePresenter extends BasePresenter<HomeMvpView> {
             month++;
         }
 
+    }
+
+
+    public void saveListItem(ListItem item) {
+        dataManager.saveBookmark(Mappers.mapHomeListItemToBookmarkDbEntity(item));
+    }
+
+    public void deleteListItem(String title) {
+        dataManager.deleteBookmark(title);
+        loadHackEvent();
     }
 
 }

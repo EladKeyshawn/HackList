@@ -21,8 +21,8 @@ public class BookmarkItem extends AbstractItem<BookmarkItem, BookmarkItem.ViewHo
   private Context context;
 
   public BookmarkItem(Context context, BookmarkDbEntity entity) {
-//    this.bookmarkTitle = entity.getEventTitle();
-//    this.eventFacebookUrl = entity.getFacebookUrl();
+    this.bookmarkTitle = entity.getEventTitle();
+    this.eventFacebookUrl = entity.getFacebookUrl();
     this.context = context;
   }
 
@@ -52,7 +52,7 @@ public class BookmarkItem extends AbstractItem<BookmarkItem, BookmarkItem.ViewHo
 
   @Override
   public void bindView(BookmarkItem.ViewHolder holder) {
-
+    super.bindView(holder);
     holder.title.setText(bookmarkTitle);
     Picasso.with(context)
         //        .load("https://hackthenorth.com/2014/img/logo.png")

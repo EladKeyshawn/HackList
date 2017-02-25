@@ -4,6 +4,7 @@ package com.projects.elad.hacklist.presentation.main.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -205,6 +206,11 @@ public class FragmentHome extends Fragment implements FastAdapter.OnLongClickLis
     public void popBottomSheet(final ListItem item) {
         View.OnClickListener bottomSheetClickListener = view -> {
             switch (view.getId()) {
+                case R.id.bottom_sheet_save:
+                    bottomsheet.dismissSheet();
+                    homePresenter.saveListItem(item);
+                    Snackbar.make(view,"Saved", Snackbar.LENGTH_LONG).show();
+                    break;
                 case R.id.bottom_sheet_webview:
                     bottomsheet.dismissSheet();
                     openWebsiteDialog(item.getWebsite());

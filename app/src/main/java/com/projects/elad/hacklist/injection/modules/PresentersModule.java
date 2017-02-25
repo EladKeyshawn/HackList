@@ -1,5 +1,6 @@
 package com.projects.elad.hacklist.injection.modules;
 
+import com.projects.elad.hacklist.presentation.main.BookmarksPresenter;
 import com.projects.elad.hacklist.presentation.main.HomePresenter;
 
 import dagger.Module;
@@ -15,4 +16,7 @@ public class PresentersModule {
     public HomePresenter provideHomePresenter(){
         return new HomePresenter();
     }
+
+    @Provides
+    public BookmarksPresenter provideBookmarksPresenter(){return new BookmarksPresenter();}
 }

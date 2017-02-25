@@ -11,12 +11,20 @@ import com.projects.elad.hacklist.util.CurrDate;
 public class DataManager {
     private HacklistService hacklistService;
     private CurrDate date;
-    @Inject
-    public DataManager(HacklistService hacklistService , CurrDate date) {
+    static DataManager dataManager;
+
+    private DataManager(HacklistService hacklistService , CurrDate date) {
         this.hacklistService = hacklistService;
         this.date = date;
     }
 
+    public static DataManager getInstance() {
+        if (dataManager == null) {
+            dataManager = new DataManager(HacklistService.ServiceCreator.newHacklistService(),new CurrDate());
+            return dataManager;
+        }
+        return dataManager;
+    }
 
     public HacklistService getHacklistService() {
         return hacklistService;

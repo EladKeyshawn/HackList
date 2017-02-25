@@ -21,9 +21,7 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
     String startDate;
     String endDate;
     String website;
-    String facebookProfileLink;
     String host;
-    //  String location;
     String people;
     String duration;
 
@@ -33,29 +31,22 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
 
     String facebookUrl;
 
-
-    public ListItem(Context context, String title, String year, String startDate, String endDate, String host,
-                    String people, String duration, String travel, String prizes, String facebookUrl, String website) {
+    public ListItem(HackEvent e, Context context) {
         this.context = context;
-        this.title = title;
-        this.year = year;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.host = host;
-        this.people = people;
-        this.duration = duration;
-        this.travel = travel;
-        this.prizes = prizes;
-        this.website = website;
-        this.facebookUrl = facebookUrl;
-//    facebookProfileLink = Constants.FACEBOOK_API_GET_PAGE_PICTURE + UsefulFunctions.getPageIdFromUrl(facebookUrl);
-
+        this.title = e.getTitle();
+        this.year = e.getYear();
+        this.startDate = e.getStartDate();
+        this.endDate = e.getEndDate();
+        this.host = e.getHost();
+        this.people = e.getSize();
+        this.duration = e.getLength();
+        this.travel = e.getTravel();
+        this.prizes = e.getPrize();
+        this.facebookUrl = e.getFacebookURL();
+        this.website = e.getUrl();
     }
 
 
-    public String getFacebookProfileLink() {
-        return facebookProfileLink;
-    }
 
     public String getWebsite() {
         return website;
@@ -120,7 +111,6 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
         holder.startDate.setText(getStartDate());
         holder.endDate.setText(getEndDate());
         holder.host.setText(getHost());
-//    holder.location.setText(getLocation());
         holder.people.setText(getPeople());
         holder.duration.setText(getDuration());
         holder.year.setText("- " + year);
@@ -149,11 +139,10 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
                 break;
         }
 
-
-        Picasso.with(context)
-                .load(UsefulFunctions.getPageIdFromUrl(facebookUrl))
-                .placeholder(R.mipmap.ic_launcher)
-                .into(holder.profile);
+            Picasso.with(context)
+                    .load(UsefulFunctions.getPageIdFromUrl(facebookUrl))
+                    .placeholder(R.mipmap.ic_launcher)
+                    .into(holder.profile);
 
 
     }
@@ -164,7 +153,6 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
         TextView startDate;
         TextView endDate;
         TextView host;
-        //    TextView location;
         TextView people;
         TextView duration;
 
@@ -189,14 +177,5 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
 
         }
     }
-
-
-    public static ListItem from(HackEvent event, Context context) {
-        return new ListItem(context, event.getTitle(), event.getYear(), event.getStartDate(), event.getEndDate(),
-                event.getHost(), event.getSize(), event.getLength(),
-                event.getTravel(), event.getPrize(), event.getFacebookURL(), event.getUrl());
-    }
-
-
 
 }

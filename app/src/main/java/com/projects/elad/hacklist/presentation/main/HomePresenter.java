@@ -1,16 +1,16 @@
 package com.projects.elad.hacklist.presentation.main;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.projects.elad.hacklist.MainActivity;
 import com.projects.elad.hacklist.adapters.HackEvent;
-import com.projects.elad.hacklist.adapters.ListItem;
 import com.projects.elad.hacklist.data.DataManager;
 import com.projects.elad.hacklist.presentation.base.BasePresenter;
+import com.projects.elad.hacklist.util.Mappers;
 import com.projects.elad.hacklist.util.RxUtil;
 import com.projects.elad.hacklist.util.UsefulFunctions;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,7 +19,6 @@ import javax.inject.Inject;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -30,11 +29,13 @@ public class HomePresenter extends BasePresenter<HomeMvpView> {
 
     private DataManager dataManager;
     private HashMap<Integer, Subscription> subscriptions;
-    @Inject private MainActivity context;
 
-    public HomePresenter(DataManager dataManager) {
+    @Inject Context context;
+
+    public HomePresenter(DataManager dataManager, Context context) {
         this.dataManager = dataManager;
         subscriptions = new HashMap<>();
+        this.context = context;
     }
 
 
@@ -65,21 +66,13 @@ public class HomePresenter extends BasePresenter<HomeMvpView> {
         while (month < 12) {
             subscriptions.put(month,
                     dataManager.getHacklistService().getMonthObject(year, UsefulFunctions.getStringForMonthInt(month))
-                            .map(new Func1<List<HackEvent>, List<ListItem>>() {
-                                @Override
-                                public List<ListItem> call(List<HackEvent> hackEvents) {
-                                    List<ListItem> items = new ArrayList<ListItem>();
-                                    for (HackEvent event : hackEvents) {
-                                        items.add(ListItem.from(event, context));
-                                    }
-                                    return items;
-                                }
-                            })
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribeOn(Schedulers.newThread())
-                            .subscribe(new Subscriber<List<ListItem>>() {
+                            .map(v -> v.entrySet().iterator().next().getValue())
+                            .subscribe(new Subscriber<List<HackEvent>>() {
                                 @Override
                                 public void onCompleted() {
+                                    Toast.makeText(context, "Fetch events completed", Toast.LENGTH_SHORT).show();
                                 }
 
                                 @Override
@@ -88,13 +81,11 @@ public class HomePresenter extends BasePresenter<HomeMvpView> {
                                 }
 
                                 @Override
-                                public void onNext(List<ListItem> listItems) {
-                                    if (!listItems.isEmpty()) {
-                                        getMvpView().showHackEvents(listItems);
-                                    }
+                                public void onNext(List<HackEvent> events) {
+                                    getMvpView().showHackEvents(Mappers.mapHackEventsToListItems(events,context));
                                 }
-
                             }));
+
             month++;
         }
 

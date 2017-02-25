@@ -32,238 +32,210 @@ import com.projects.elad.hacklist.adapters.HackEvent;
 import com.projects.elad.hacklist.adapters.HacklistService;
 import com.projects.elad.hacklist.adapters.ListItem;
 import com.projects.elad.hacklist.data.DataManager;
-import com.projects.elad.hacklist.db.EventBookmark;
-import com.projects.elad.hacklist.presentation.main.HomePresenter;
 import com.projects.elad.hacklist.presentation.main.HomeMvpView;
-import com.projects.elad.hacklist.util.Constants;
+import com.projects.elad.hacklist.presentation.main.HomePresenter;
 import com.projects.elad.hacklist.util.UsefulFunctions;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit.RestAdapter;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentHome extends Fragment implements  FastAdapter.OnLongClickListener, SearchView.OnQueryTextListener, HomeMvpView {
+public class FragmentHome extends Fragment implements FastAdapter.OnLongClickListener, SearchView.OnQueryTextListener, HomeMvpView {
 
 
+    @Inject
+    HomePresenter homePresenter;
+    @BindView(R.id.all_hackathons_list)
+    RecyclerView hackEventsList;
+    @BindView(R.id.fragment_home_bottomsheet)
+    BottomSheetLayout bottomsheet;
 
-  @Inject HomePresenter homePresenter;
-  @BindView(R.id.all_hackathons_list)
-  RecyclerView hackEventsList;
-  @BindView(R.id.fragment_home_bottomsheet)
-  BottomSheetLayout bottomsheet;
+    private FastAdapter<ListItem> fastAdapter;
+    private ItemAdapter<ListItem> itemAdapter;
+    private Context context;
+    private SearchView searchBox;
 
-  private FastAdapter<ListItem> fastAdapter;
-  private ItemAdapter<ListItem> itemAdapter;
-
-  private Context context;
-  private ArrayList<ListItem> listItems;
-  private List<HackEvent> eventsFromFeed;
-  private HacklistService serverInterface;
-  private SearchView searchBox;
-  private Menu ourOptionsMenu;
-  private ListItem bottomSheetEventItem = null;
-  public FragmentHome() {
-    // Required empty public constructor
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case R.id.action_travel_only: {
-        if (item.isChecked()) { // unchecking it now
-          item.setChecked(false);
-          // TODO: unapply filter
-          itemAdapter.filter("");
-        } else {
-          item.setChecked(true);
-          // TODO: apply filter
-          itemAdapter.filter("travel"); // filter out all that contain "no"
-        }
-        return true;
-      }
-      default:
-        return super.onOptionsItemSelected(item);
+    public FragmentHome() {
     }
-  }
 
-
-  @Override
-  public void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setHasOptionsMenu(true);
-
-  }
-
-  @Override
-  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-    super.onCreateOptionsMenu(menu, inflater);
-    ourOptionsMenu = menu;
-  }
-
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
-    context = super.getActivity();
-
-    View ourView = inflater.inflate(R.layout.fragment_home, container, false);
-    ButterKnife.bind(this, ourView);
-
-    listItems = new ArrayList<>();
-
-    eventsFromFeed = new ArrayList<>();
-
-    fastAdapter = new FastAdapter<>();
-    itemAdapter = new ItemAdapter<>();
-
-    fastAdapter.withSelectOnLongClick(false);
-    fastAdapter.withSelectable(false);
-    fastAdapter.withOnLongClickListener(this);
-    fastAdapter.withOnClickListener(new FastAdapter.OnClickListener<ListItem>() {
-      @Override
-      public boolean onClick(View v, IAdapter<ListItem> adapter, ListItem item, int position) {
-        popBottomSheet(item);
-        return true;
-      }
-    });
-    itemAdapter.withFilterPredicate(new IItemAdapter.Predicate<ListItem>() {
-      @Override
-      public boolean filter(ListItem item, CharSequence constraint) {
-
-        if (constraint.toString().length() > 0) {
-          switch (constraint.toString()) {
-            case "travel":
-              return item.getTravel().equals("no") || item.getTravel().equals("unknown");
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_travel_only: {
+                if (item.isChecked()) { // unchecking it now
+                    item.setChecked(false);
+                    itemAdapter.filter("");
+                } else {
+                    item.setChecked(true);
+                    itemAdapter.filter("travel"); // filter out all that contain "no"
+                }
+                return true;
+            }
             default:
-              return !item.getTitle().toLowerCase().contains(constraint.toString().toLowerCase());
-
-          }
-        } else {
-          return true;
+                return super.onOptionsItemSelected(item);
         }
+    }
 
 
-      }
-    });
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
-    hackEventsList.setLayoutManager(new LinearLayoutManager(context));
-    hackEventsList.setAdapter(itemAdapter.wrap(fastAdapter));
-
-    searchBox = (SearchView) getActivity().findViewById(R.id.trip_search_edit);
-    searchBox.clearFocus();
-
-    searchBox.setOnQueryTextListener(this);
+    }
 
 
-    return ourView;
-  }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        context = super.getActivity();
+
+        homePresenter = new HomePresenter(DataManager.getInstance(),context);
+        View ourView = inflater.inflate(R.layout.fragment_home, container, false);
+        ButterKnife.bind(this, ourView);
 
 
-  @Override
-  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        fastAdapter = new FastAdapter<>();
+        itemAdapter = new ItemAdapter<>();
 
-    homePresenter.attachView(this);
-    homePresenter.loadHackEvent();
-  }
+        fastAdapter.withSelectOnLongClick(false);
+        fastAdapter.withSelectable(false);
+        fastAdapter.withOnLongClickListener(this);
+        fastAdapter.withOnClickListener((v, adapter, item, position) -> {
+            popBottomSheet(item);
+            return true;
+        });
+        itemAdapter.withFilterPredicate((item, constraint) -> {
 
+            if (constraint.toString().length() > 0) {
+                switch (constraint.toString()) {
+                    case "travel":
+                        return item.getTravel().equals("no") || item.getTravel().equals("unknown");
 
+                    default:
+                        return !item.getTitle().toLowerCase().contains(constraint.toString().toLowerCase());
 
-  @Override
-  public void onDestroyView() {
-    super.onDestroyView();
-    homePresenter.detachView();
-  }
-
-  @Override
-  public boolean onLongClick(View v, IAdapter adapter, IItem item, int position) {
-    Toast.makeText(context, "long click", Toast.LENGTH_SHORT).show();
-    return true;
-  }
-
-
-  @Override
-  public boolean onQueryTextSubmit(String query) {
-    return false;
-  }
-
-  @Override
-  public boolean onQueryTextChange(String newText) {
-    itemAdapter.filter(newText);
-    return true;
-  }
+                }
+            } else {
+                return true;
+            }
 
 
-  @Override
-  public Context getContext() {
-    return context;
-  }
+        });
 
-  public void openWebsiteDialog(String url) {
+        hackEventsList.setLayoutManager(new LinearLayoutManager(context));
+        hackEventsList.setAdapter(itemAdapter.wrap(fastAdapter));
+
+        searchBox = (SearchView) getActivity().findViewById(R.id.trip_search_edit);
+        searchBox.clearFocus();
+
+        searchBox.setOnQueryTextListener(this);
 
 
-    WebView webview = (WebView) LayoutInflater.from(getContext()).inflate(R.layout.website_webview, null);
-    webview.loadUrl(url);
-    webview.setWebViewClient(new WebViewClient() {
-      @Override
-      public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        view.loadUrl(url);
+        return ourView;
+    }
+
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+
+
+        homePresenter.attachView(this);
+        homePresenter.loadHackEvent();
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        homePresenter.detachView();
+    }
+
+    @Override
+    public boolean onLongClick(View v, IAdapter adapter, IItem item, int position) {
+        Toast.makeText(context, "long click", Toast.LENGTH_SHORT).show();
+        return true;
+    }
+
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
         return false;
-      }
-    });
-    AlertDialog mAlertDialog = new AlertDialog.Builder(getContext(), R.style.Theme_AppCompat_Light_Dialog_Alert)
-        .setView(webview)
-        .setPositiveButton(android.R.string.ok, null)
-        .show();
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        itemAdapter.filter(newText);
+        return true;
+    }
 
 
-  }
+    @Override
+    public Context getContext() {
+        return context;
+    }
 
-  @Override
-  public void showHackEvents(List<ListItem> listItems) {
-    itemAdapter.add(listItems);
-  }
+    public void openWebsiteDialog(String url) {
 
-  @Override
-  public void popBottomSheet(final ListItem item) {
-    View.OnClickListener bottomSheetClickListener = new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        switch (view.getId()) {
-          case R.id.bottom_sheet_webview:
-            bottomsheet.dismissSheet();
-            openWebsiteDialog(item.getWebsite());
-            break;
-          case R.id.bottom_sheet_apply:
-            bottomsheet.dismissSheet();
-            openWebsiteDialog(item.getWebsite());
-        }
-      }
-    };
-    bottomsheet.setPeekSheetTranslation(1200);
-    bottomsheet.showWithSheetView(LayoutInflater.from(context).inflate(R.layout.bottomsheet_event_item, bottomsheet, false));
-    ImageView eventPic = (ImageView) bottomsheet.findViewById(R.id.bottom_sheet_event_logo);
-    Button saveBtn = (Button) bottomsheet.findViewById(R.id.bottom_sheet_save);
-    Button webviewBtn = (Button) bottomsheet.findViewById(R.id.bottom_sheet_webview);
-    Button applyButtn = (Button) bottomsheet.findViewById(R.id.bottom_sheet_apply);
 
-    String logoLink = UsefulFunctions.getPageIdFromUrl(item.getFacebookUrl());
-    Picasso.with(context)
-            .load(logoLink)
-            .placeholder(R.mipmap.ic_launcher)
-            .into(eventPic);
-    saveBtn.setOnClickListener( bottomSheetClickListener);
-    webviewBtn.setOnClickListener(bottomSheetClickListener);
-    applyButtn.setOnClickListener(bottomSheetClickListener);
-  }
+        WebView webview = (WebView) LayoutInflater.from(getContext()).inflate(R.layout.website_webview, null);
+        webview.loadUrl(url);
+        webview.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return false;
+            }
+        });
+        AlertDialog mAlertDialog = new AlertDialog.Builder(getContext(), R.style.Theme_AppCompat_Light_Dialog_Alert)
+                .setView(webview)
+                .setPositiveButton(android.R.string.ok, null)
+                .show();
+
+
+    }
+
+    @Override
+    public void showHackEvents(List<ListItem> listItems) {
+        itemAdapter.add(listItems);
+    }
+
+    @Override
+    public void popBottomSheet(final ListItem item) {
+        View.OnClickListener bottomSheetClickListener = view -> {
+            switch (view.getId()) {
+                case R.id.bottom_sheet_webview:
+                    bottomsheet.dismissSheet();
+                    openWebsiteDialog(item.getWebsite());
+                    break;
+                case R.id.bottom_sheet_apply:
+                    bottomsheet.dismissSheet();
+                    openWebsiteDialog(item.getWebsite());
+            }
+        };
+        bottomsheet.setPeekSheetTranslation(1200);
+        bottomsheet.showWithSheetView(LayoutInflater.from(context).inflate(R.layout.bottomsheet_event_item, bottomsheet, false));
+        ImageView eventPic = (ImageView) bottomsheet.findViewById(R.id.bottom_sheet_event_logo);
+        Button saveBtn = (Button) bottomsheet.findViewById(R.id.bottom_sheet_save);
+        Button webviewBtn = (Button) bottomsheet.findViewById(R.id.bottom_sheet_webview);
+        Button applyButtn = (Button) bottomsheet.findViewById(R.id.bottom_sheet_apply);
+
+        String logoLink = UsefulFunctions.getPageIdFromUrl(item.getFacebookUrl());
+        Picasso.with(context)
+                .load(logoLink)
+                .placeholder(R.mipmap.ic_launcher)
+                .into(eventPic);
+        saveBtn.setOnClickListener(bottomSheetClickListener);
+        webviewBtn.setOnClickListener(bottomSheetClickListener);
+        applyButtn.setOnClickListener(bottomSheetClickListener);
+    }
 }

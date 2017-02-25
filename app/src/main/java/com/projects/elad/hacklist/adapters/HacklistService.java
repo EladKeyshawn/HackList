@@ -3,6 +3,7 @@ package com.projects.elad.hacklist.adapters;
 import com.projects.elad.hacklist.util.Constants;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit.RestAdapter;
 import retrofit.http.GET;
@@ -13,7 +14,7 @@ import rx.Observable;
 public interface HacklistService {
 
   @GET("/{YEAR}/{MONTH}.json")
-  Observable<List<HackEvent>> getMonthObject(@Path("YEAR") String year, @Path("MONTH") String month);
+  Observable<Map<String, List<HackEvent>>> getMonthObject(@Path("YEAR") String year, @Path("MONTH") String month);
 
 
   /******** Helper class that sets up new services *******/

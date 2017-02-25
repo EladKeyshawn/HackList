@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 24
@@ -18,11 +19,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+
 }
 
 dependencies {
 
-    final DAGGER_VERSION = '2.5'
+    final DAGGER_VERSION = '2.9'
 
     def daggerCompiler = "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
 
@@ -55,15 +61,16 @@ dependencies {
     // reactive programming
     compile 'io.reactivex:rxjava:1.0.+'
     compile 'io.reactivex:rxandroid:0.23.+'
+    compile 'com.annimon:stream:1.1.5'
 
     // dependency injection
     compile 'com.jakewharton:butterknife:8.2.1'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
+
     compile  "com.google.dagger:dagger:$DAGGER_VERSION"
     provided 'org.glassfish:javax.annotation:10.0-b28' //Required by Dagger2
     annotationProcessor daggerCompiler
     testAnnotationProcessor daggerCompiler
-    androidTestAnnotationProcessor daggerCompiler
 
 
 

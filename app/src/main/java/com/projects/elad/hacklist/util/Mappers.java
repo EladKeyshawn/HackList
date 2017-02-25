@@ -4,8 +4,8 @@ import android.content.Context;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
-import com.projects.elad.hacklist.adapters.HackEvent;
-import com.projects.elad.hacklist.adapters.ListItem;
+import com.projects.elad.hacklist.data.remote.HackEvent;
+import com.projects.elad.hacklist.presentation.main.adapters.ListItem;
 
 import java.util.List;
 

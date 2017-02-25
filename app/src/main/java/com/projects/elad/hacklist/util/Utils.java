@@ -1,7 +1,7 @@
 package com.projects.elad.hacklist.util;
 
 
-public class UsefulFunctions {
+public class Utils {
 
 
   // get month in calender format and gives a string

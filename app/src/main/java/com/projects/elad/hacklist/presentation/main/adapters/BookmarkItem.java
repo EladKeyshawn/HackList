@@ -1,4 +1,4 @@
-package com.projects.elad.hacklist.adapters;
+package com.projects.elad.hacklist.presentation.main.adapters;
 
 
 import android.content.Context;
@@ -9,19 +9,20 @@ import android.widget.TextView;
 
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.projects.elad.hacklist.R;
-import com.projects.elad.hacklist.db.EventBookmark;
-import com.projects.elad.hacklist.util.UsefulFunctions;
+import com.projects.elad.hacklist.data.db.BookmarkDbEntity;
+import com.projects.elad.hacklist.util.Utils;
 import com.squareup.picasso.Picasso;
 
-public class BookmarkEventItem extends AbstractItem<BookmarkEventItem, BookmarkEventItem.ViewHolder> {
+public class BookmarkItem extends AbstractItem<BookmarkItem, BookmarkItem.ViewHolder> {
 
 
   private String bookmarkTitle;
   private String eventFacebookUrl;
   private Context context;
-  public BookmarkEventItem(Context context, EventBookmark bookmark) {
-    this.bookmarkTitle = bookmark.getEventTitle();
-    this.eventFacebookUrl = bookmark.getFacebookUrl();
+
+  public BookmarkItem(Context context, BookmarkDbEntity entity) {
+//    this.bookmarkTitle = entity.getEventTitle();
+//    this.eventFacebookUrl = entity.getFacebookUrl();
     this.context = context;
   }
 
@@ -50,13 +51,12 @@ public class BookmarkEventItem extends AbstractItem<BookmarkEventItem, BookmarkE
 
 
   @Override
-  public void bindView(BookmarkEventItem.ViewHolder holder) {
-    super.bindView(holder);
+  public void bindView(BookmarkItem.ViewHolder holder) {
 
     holder.title.setText(bookmarkTitle);
     Picasso.with(context)
         //        .load("https://hackthenorth.com/2014/img/logo.png")
-        .load(UsefulFunctions.getPageIdFromUrl(eventFacebookUrl))
+        .load(Utils.getPageIdFromUrl(eventFacebookUrl))
         .placeholder(R.mipmap.ic_launcher)
         .into(holder.profile);
   }
@@ -71,7 +71,6 @@ public class BookmarkEventItem extends AbstractItem<BookmarkEventItem, BookmarkE
       super(itemView);
       title = (TextView) itemView.findViewById(R.id.bookmarks_event_title);
       profile = (ImageView) itemView.findViewById(R.id.bookmarks_event_icon);
-
 
     }
   }

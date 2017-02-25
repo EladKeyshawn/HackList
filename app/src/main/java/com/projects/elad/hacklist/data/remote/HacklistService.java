@@ -1,4 +1,4 @@
-package com.projects.elad.hacklist.adapters;
+package com.projects.elad.hacklist.data.remote;
 
 import com.projects.elad.hacklist.util.Constants;
 

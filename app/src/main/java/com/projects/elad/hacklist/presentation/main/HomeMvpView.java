@@ -2,10 +2,9 @@ package com.projects.elad.hacklist.presentation.main;
 
 import android.content.Context;
 
-import com.projects.elad.hacklist.adapters.ListItem;
+import com.projects.elad.hacklist.presentation.main.adapters.ListItem;
 import com.projects.elad.hacklist.presentation.base.MvpView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

@@ -1,4 +1,4 @@
-package com.projects.elad.hacklist.adapters;
+package com.projects.elad.hacklist.presentation.main.adapters;
 
 
 import android.content.Context;
@@ -9,7 +9,8 @@ import android.widget.TextView;
 
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.projects.elad.hacklist.R;
-import com.projects.elad.hacklist.util.UsefulFunctions;
+import com.projects.elad.hacklist.data.remote.HackEvent;
+import com.projects.elad.hacklist.util.Utils;
 import com.squareup.picasso.Picasso;
 
 public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
@@ -24,11 +25,8 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
     String host;
     String people;
     String duration;
-
-
     String travel;
     String prizes;
-
     String facebookUrl;
 
     public ListItem(HackEvent e, Context context) {
@@ -91,7 +89,9 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
         return facebookUrl;
     }
 
-  /*   Here starts fast adapter implementation   */
+
+     /** Here starts fast adapter implementation **/
+
 
     @Override
     public int getType() {
@@ -140,7 +140,7 @@ public class ListItem extends AbstractItem<ListItem, ListItem.ViewHolder> {
         }
 
             Picasso.with(context)
-                    .load(UsefulFunctions.getPageIdFromUrl(facebookUrl))
+                    .load(Utils.getPageIdFromUrl(facebookUrl))
                     .placeholder(R.mipmap.ic_launcher)
                     .into(holder.profile);
 

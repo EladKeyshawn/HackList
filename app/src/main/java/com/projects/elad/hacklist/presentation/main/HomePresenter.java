@@ -3,13 +3,14 @@ package com.projects.elad.hacklist.presentation.main;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.projects.elad.hacklist.MainActivity;
-import com.projects.elad.hacklist.adapters.HackEvent;
+import com.projects.elad.hacklist.HacklistApplication;
+import com.projects.elad.hacklist.data.remote.HackEvent;
 import com.projects.elad.hacklist.data.DataManager;
 import com.projects.elad.hacklist.presentation.base.BasePresenter;
+import com.projects.elad.hacklist.presentation.main.fragments.FragmentHome;
 import com.projects.elad.hacklist.util.Mappers;
 import com.projects.elad.hacklist.util.RxUtil;
-import com.projects.elad.hacklist.util.UsefulFunctions;
+import com.projects.elad.hacklist.util.Utils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,21 +28,20 @@ import rx.schedulers.Schedulers;
 
 public class HomePresenter extends BasePresenter<HomeMvpView> {
 
-    private DataManager dataManager;
+    @Inject DataManager dataManager;
     private HashMap<Integer, Subscription> subscriptions;
-
     @Inject Context context;
 
-    public HomePresenter(DataManager dataManager, Context context) {
-        this.dataManager = dataManager;
+    public HomePresenter() {
         subscriptions = new HashMap<>();
-        this.context = context;
     }
 
 
     @Override
     public void attachView(HomeMvpView mvpView) {
         super.attachView(mvpView);
+        ((HacklistApplication)(((FragmentHome)getMvpView()).getActivity().getApplication())).getComponent().inject(this);
+
     }
 
     @Override
@@ -65,7 +65,7 @@ public class HomePresenter extends BasePresenter<HomeMvpView> {
         String year = dataManager.getDate().getCurrentYear();
         while (month < 12) {
             subscriptions.put(month,
-                    dataManager.getHacklistService().getMonthObject(year, UsefulFunctions.getStringForMonthInt(month))
+                    dataManager.getHacklistService().getMonthObject(year, Utils.getStringForMonthInt(month))
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribeOn(Schedulers.newThread())
                             .map(v -> v.entrySet().iterator().next().getValue())

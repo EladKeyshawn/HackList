@@ -19,7 +19,7 @@ public class CurrDate {
          currMonthInt = calender.get(Calendar.MONTH);
 
          currentYear = String.valueOf(currYearInt);
-         currentMonth = UsefulFunctions.getStringForMonthInt(currMonthInt);
+         currentMonth = Utils.getStringForMonthInt(currMonthInt);
     }
 
     public int getCurrYearInt() {

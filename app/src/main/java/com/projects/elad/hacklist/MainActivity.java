@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
   private Toolbar toolbar;
   private TabLayout tabLayout;
   private ViewPager viewPager;
-//  private ContextMenuDialogFragment mMenuDialogFragment;
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {

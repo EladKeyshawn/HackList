@@ -26,8 +26,8 @@ Inspired by:
 
 
 ## Used libraries
-* __Dagger2__ - used to make the app more structural and its modules - more independent (weak connected). 
-* __RxJava/RxAndroid__ - used for multithreading.
+* __Dagger2__  
+* __RxJava/RxAndroid__ 
 * __Retrofit__
 * __Picasso__
 * __Butterknife__

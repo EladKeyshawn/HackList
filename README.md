@@ -8,7 +8,7 @@
    Hacklist is a project that demonstrates the usage of MVP pattern along with RxJava/Android and the Dagger 2 dependecy i        injection framework.
    </p>
    <p>
-   HackList uses [HackalistAPI](http://www.hackalist.org/) to retrieve details about upcoming hackathons including filtering      and search options. 
+   HackList uses <a href="http://www.hackalist.org)">HackalistAPI</a> to retrieve details about upcoming hackathons including filtering      and search options. 
    </p>
 </div>
 

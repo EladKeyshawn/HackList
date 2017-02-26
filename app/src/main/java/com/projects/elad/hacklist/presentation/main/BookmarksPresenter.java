@@ -26,9 +26,12 @@ import rx.schedulers.Schedulers;
 
 public class BookmarksPresenter extends BasePresenter<BookmarksMvpView> {
 
-    @Inject DataManager dataManager;
-    @Inject Context context;
+    @Inject
+    DataManager dataManager;
+    @Inject
+    Context context;
     private Subscription subscription;
+
     public BookmarksPresenter() {
     }
 
@@ -42,7 +45,7 @@ public class BookmarksPresenter extends BasePresenter<BookmarksMvpView> {
     @Override
     public void attachView(BookmarksMvpView mvpView) {
         super.attachView(mvpView);
-        ((HacklistApplication)(((FragmentBookmarks)getMvpView()).getActivity().getApplication())).getComponent().inject(this);
+        ((HacklistApplication) (((FragmentBookmarks) getMvpView()).getActivity().getApplication())).getComponent().inject(this);
 
     }
 
@@ -50,7 +53,7 @@ public class BookmarksPresenter extends BasePresenter<BookmarksMvpView> {
     public void loadBookmarks() {
         RxUtil.unsubscribe(subscription);
         subscription = dataManager.getAllBookmarks()
-                .map(dbEntities -> Mappers.mapBookmarkDbEntityToItem(dbEntities,context))
+                .map(dbEntities -> Mappers.mapBookmarkDbEntityToItem(dbEntities, context))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<BookmarkItem>>() {
@@ -73,7 +76,6 @@ public class BookmarksPresenter extends BasePresenter<BookmarksMvpView> {
                     }
                 });
     }
-
 
 
     public void deleteBookmark(BookmarkItem bookmark) {

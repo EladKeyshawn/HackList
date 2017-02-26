@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.projects.elad.hacklist.R;
-import com.projects.elad.hacklist.data.remote.HackEvent;
+import com.projects.elad.hacklist.data.api.HackEvent;
 import com.projects.elad.hacklist.util.Utils;
 import com.squareup.picasso.Picasso;
 

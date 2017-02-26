@@ -5,7 +5,7 @@ import android.content.Context;
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.projects.elad.hacklist.data.db.BookmarkDbEntity;
-import com.projects.elad.hacklist.data.remote.HackEvent;
+import com.projects.elad.hacklist.data.api.HackEvent;
 import com.projects.elad.hacklist.presentation.main.adapters.BookmarkItem;
 import com.projects.elad.hacklist.presentation.main.adapters.ListItem;
 

@@ -1,10 +1,9 @@
 package com.projects.elad.hacklist.presentation.main;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.projects.elad.hacklist.HacklistApplication;
-import com.projects.elad.hacklist.data.remote.HackEvent;
+import com.projects.elad.hacklist.data.api.HackEvent;
 import com.projects.elad.hacklist.data.DataManager;
 import com.projects.elad.hacklist.presentation.base.BasePresenter;
 import com.projects.elad.hacklist.presentation.main.adapters.ListItem;

@@ -1,4 +1,4 @@
-package com.projects.elad.hacklist.data.remote;
+package com.projects.elad.hacklist.data.api;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

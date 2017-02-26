@@ -46,12 +46,11 @@ public class FragmentBookmarks extends Fragment implements FastAdapter.OnLongCli
     }
 
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        ((HacklistApplication)(getActivity().getApplication())).getComponent().inject(this);
+        ((HacklistApplication) (getActivity().getApplication())).getComponent().inject(this);
     }
 
     @Override
@@ -72,7 +71,6 @@ public class FragmentBookmarks extends Fragment implements FastAdapter.OnLongCli
 
         bookmarksList.setLayoutManager(new LinearLayoutManager(context));
         bookmarksList.setAdapter(itemFastAdapter.wrap(fastAdapter));
-
 
 
         return ourView;

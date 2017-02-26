@@ -4,7 +4,7 @@ import javax.inject.Singleton;
 
 import com.projects.elad.hacklist.data.db.BookmarkDbEntity;
 import com.projects.elad.hacklist.data.db.RealmBookmarksHelper;
-import com.projects.elad.hacklist.data.remote.HacklistService;
+import com.projects.elad.hacklist.data.api.HacklistService;
 import com.projects.elad.hacklist.util.CurrDate;
 
 import java.util.List;

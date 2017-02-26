@@ -19,10 +19,7 @@
           android:layout_height="match_parent"
           android:focusable="true"
           android:clickable="true"
-          android:scrollbars="vertical"
-          >
-
-
+          android:scrollbars="vertical">
 
       </android.support.v7.widget.RecyclerView>
 

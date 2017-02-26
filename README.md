@@ -31,7 +31,7 @@ Inspired by:
 * __Retrofit__
 * __Picasso__
 * __Butterknife__
-
+* __RetroLambda
 * __Realm__ - used for local data caching.
 
 ## Design Libraries

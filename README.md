@@ -34,3 +34,7 @@ Inspired by:
 
 * __FlipBoardBottomSheet__
 
+
+## License
+Under MIT Copyright (c) 2017 Elad Keyshawn [elad.keyshawn@gmail.com]
+

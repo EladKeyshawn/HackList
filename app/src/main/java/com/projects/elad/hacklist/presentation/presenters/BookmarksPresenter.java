@@ -1,4 +1,4 @@
-package com.projects.elad.hacklist.presentation.main;
+package com.projects.elad.hacklist.presentation.presenters;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -6,6 +6,7 @@ import android.widget.Toast;
 import com.projects.elad.hacklist.HacklistApplication;
 import com.projects.elad.hacklist.data.DataManager;
 import com.projects.elad.hacklist.presentation.base.BasePresenter;
+import com.projects.elad.hacklist.presentation.views.BookmarksMvpView;
 import com.projects.elad.hacklist.presentation.main.adapters.BookmarkItem;
 import com.projects.elad.hacklist.presentation.main.fragments.FragmentBookmarks;
 import com.projects.elad.hacklist.util.Mappers;
@@ -18,7 +19,6 @@ import javax.inject.Inject;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by EladKeyshawn on 25/02/2017.

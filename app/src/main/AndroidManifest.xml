@@ -20,7 +20,7 @@
         android:value="com.projects.elad.hacklist.db"/>
 
 
-    <activity android:name=".MainActivity">
+    <activity android:name=".presentation.main.activities.MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 

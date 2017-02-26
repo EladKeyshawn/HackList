@@ -1,4 +1,4 @@
-package com.projects.elad.hacklist;
+package com.projects.elad.hacklist.presentation.main.activities;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.projects.elad.hacklist.R;
 import com.projects.elad.hacklist.presentation.main.fragments.FragmentBookmarks;
 import com.projects.elad.hacklist.presentation.main.fragments.FragmentHome;
 

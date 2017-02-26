@@ -28,8 +28,8 @@ import com.mikepenz.fastadapter.adapters.ItemAdapter;
 import com.projects.elad.hacklist.HacklistApplication;
 import com.projects.elad.hacklist.R;
 import com.projects.elad.hacklist.presentation.main.adapters.ListItem;
-import com.projects.elad.hacklist.presentation.main.HomeMvpView;
-import com.projects.elad.hacklist.presentation.main.HomePresenter;
+import com.projects.elad.hacklist.presentation.views.HomeMvpView;
+import com.projects.elad.hacklist.presentation.presenters.HomePresenter;
 import com.projects.elad.hacklist.util.Utils;
 import com.squareup.picasso.Picasso;
 

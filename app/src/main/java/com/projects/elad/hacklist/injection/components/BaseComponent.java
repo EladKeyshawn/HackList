@@ -3,8 +3,8 @@ package com.projects.elad.hacklist.injection.components;
 import com.projects.elad.hacklist.injection.modules.AppModule;
 import com.projects.elad.hacklist.injection.modules.NetModule;
 import com.projects.elad.hacklist.injection.modules.PresentersModule;
-import com.projects.elad.hacklist.presentation.main.BookmarksPresenter;
-import com.projects.elad.hacklist.presentation.main.HomePresenter;
+import com.projects.elad.hacklist.presentation.presenters.BookmarksPresenter;
+import com.projects.elad.hacklist.presentation.presenters.HomePresenter;
 import com.projects.elad.hacklist.presentation.main.fragments.FragmentBookmarks;
 import com.projects.elad.hacklist.presentation.main.fragments.FragmentHome;
 

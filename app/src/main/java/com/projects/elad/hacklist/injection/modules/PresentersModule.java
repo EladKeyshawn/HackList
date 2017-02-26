@@ -1,7 +1,9 @@
 package com.projects.elad.hacklist.injection.modules;
 
-import com.projects.elad.hacklist.presentation.main.BookmarksPresenter;
-import com.projects.elad.hacklist.presentation.main.HomePresenter;
+
+
+import com.projects.elad.hacklist.presentation.presenters.BookmarksPresenter;
+import com.projects.elad.hacklist.presentation.presenters.HomePresenter;
 
 import dagger.Module;
 import dagger.Provides;

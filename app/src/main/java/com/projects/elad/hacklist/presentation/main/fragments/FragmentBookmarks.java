@@ -20,8 +20,8 @@ import com.mikepenz.fastadapter.IItem;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
 import com.projects.elad.hacklist.HacklistApplication;
 import com.projects.elad.hacklist.R;
-import com.projects.elad.hacklist.presentation.main.BookmarksMvpView;
-import com.projects.elad.hacklist.presentation.main.BookmarksPresenter;
+import com.projects.elad.hacklist.presentation.views.BookmarksMvpView;
+import com.projects.elad.hacklist.presentation.presenters.BookmarksPresenter;
 import com.projects.elad.hacklist.presentation.main.adapters.BookmarkItem;
 
 import java.util.List;

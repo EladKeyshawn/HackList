@@ -1,4 +1,4 @@
-package com.projects.elad.hacklist.presentation.main;
+package com.projects.elad.hacklist.presentation.views;
 
 import android.content.Context;
 

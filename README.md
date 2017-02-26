@@ -1,4 +1,5 @@
-## ![HackList](https://github.com/EladKeyshawn/HackList/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
+![](https://github.com/EladKeyshawn/HackList/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
+# HackList 
 This project demonstrates the usage of MVP pattern along with RxJava/Android and the Dagger 2 dependecy injection framework.
 
 HackList uses [HackalistAPI](http://www.hackalist.org/) to retrieve details about upcoming hackathons including filtering and search options. 

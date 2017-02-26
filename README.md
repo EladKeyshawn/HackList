@@ -6,8 +6,10 @@
   <h1>HackList</h1>
   <p>
    Hacklist is a project that demonstrates the usage of MVP pattern along with RxJava/Android and the Dagger 2 dependecy i        injection framework.
+   </p>
+   <p>
    HackList uses [HackalistAPI](http://www.hackalist.org/) to retrieve details about upcoming hackathons including filtering      and search options. 
-  <p>
+   </p>
 </div>
 
 Inspired by:
@@ -29,5 +31,6 @@ Inspired by:
 * __Realm__ - used for local data caching.
 * __FastAdapter__ - managing RecyclerViews adapters.
 ## Design Libraries
+
 * __FlipBoardBottomSheet__
 

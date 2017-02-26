@@ -3,12 +3,12 @@ package com.projects.elad.hacklist.presentation.presenters;
 import android.content.Context;
 
 import com.projects.elad.hacklist.HacklistApplication;
-import com.projects.elad.hacklist.data.api.HackEvent;
 import com.projects.elad.hacklist.data.DataManager;
-import com.projects.elad.hacklist.presentation.views.HomeMvpView;
+import com.projects.elad.hacklist.data.api.HackEvent;
 import com.projects.elad.hacklist.presentation.base.BasePresenter;
 import com.projects.elad.hacklist.presentation.main.adapters.ListItem;
 import com.projects.elad.hacklist.presentation.main.fragments.FragmentHome;
+import com.projects.elad.hacklist.presentation.views.HomeMvpView;
 import com.projects.elad.hacklist.util.Mappers;
 import com.projects.elad.hacklist.util.RxUtil;
 import com.projects.elad.hacklist.util.Utils;
@@ -96,9 +96,12 @@ public class HomePresenter extends BasePresenter<HomeMvpView> {
         dataManager.saveBookmark(Mappers.mapHomeListItemToBookmarkDbEntity(item));
     }
 
-    public void deleteListItem(String title) {
-        dataManager.deleteBookmark(title);
-        loadHackEvent();
+    public boolean isBookmarkSaved(String title) {
+        return dataManager.isSaved(title);
     }
 
+
+    public void deleteBookmark(String title) {
+        dataManager.deleteBookmark(title);
+    }
 }

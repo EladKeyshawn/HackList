@@ -1,13 +1,14 @@
 package com.projects.elad.hacklist.data;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
+import com.projects.elad.hacklist.data.api.HacklistService;
 import com.projects.elad.hacklist.data.db.BookmarkDbEntity;
 import com.projects.elad.hacklist.data.db.RealmBookmarksHelper;
-import com.projects.elad.hacklist.data.api.HacklistService;
 import com.projects.elad.hacklist.util.CurrDate;
 
 import java.util.List;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import rx.Observable;
 
@@ -45,5 +46,9 @@ public class DataManager {
 
     public void deleteBookmark(String title) {
         realmHelper.deleteBookmark(title);
+    }
+
+    public boolean isSaved(String title) {
+        return realmHelper.isInDatabase(title);
     }
 }

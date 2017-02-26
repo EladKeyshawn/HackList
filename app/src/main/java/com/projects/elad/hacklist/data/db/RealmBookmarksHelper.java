@@ -1,7 +1,6 @@
 package com.projects.elad.hacklist.data.db;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -33,7 +32,6 @@ public class RealmBookmarksHelper {
 
            });
        } finally {
-           Toast.makeText(context, "RealmHelper:: bookmark saved!", Toast.LENGTH_SHORT).show();
            realm.close();
        }
     }
@@ -59,5 +57,12 @@ public class RealmBookmarksHelper {
         } finally {
             realm.close();
         }
+    }
+
+    public boolean isInDatabase(String title) {
+        realm = Realm.getDefaultInstance();
+        BookmarkDbEntity entity = realm.where(BookmarkDbEntity.class).equalTo("eventTitle", title).findFirst();
+        realm.close();
+        return entity != null;
     }
 }

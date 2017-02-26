@@ -4,7 +4,6 @@ package com.projects.elad.hacklist.presentation.main.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,8 +27,8 @@ import com.mikepenz.fastadapter.adapters.ItemAdapter;
 import com.projects.elad.hacklist.HacklistApplication;
 import com.projects.elad.hacklist.R;
 import com.projects.elad.hacklist.presentation.main.adapters.ListItem;
-import com.projects.elad.hacklist.presentation.views.HomeMvpView;
 import com.projects.elad.hacklist.presentation.presenters.HomePresenter;
+import com.projects.elad.hacklist.presentation.views.HomeMvpView;
 import com.projects.elad.hacklist.util.Utils;
 import com.squareup.picasso.Picasso;
 
@@ -57,6 +56,10 @@ public class FragmentHome extends Fragment implements FastAdapter.OnLongClickLis
     private ItemAdapter<ListItem> itemAdapter;
     private Context context;
     private SearchView searchBox;
+    private ImageView eventPic;
+    private Button saveBtn;
+    private Button webviewBtn;
+    private Button applyButtn;
 
     public FragmentHome() {
     }
@@ -140,8 +143,6 @@ public class FragmentHome extends Fragment implements FastAdapter.OnLongClickLis
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-
-
         homePresenter.attachView(this);
         homePresenter.loadHackEvent();
     }
@@ -202,14 +203,19 @@ public class FragmentHome extends Fragment implements FastAdapter.OnLongClickLis
         itemAdapter.add(listItems);
     }
 
-    @Override
     public void popBottomSheet(final ListItem item) {
+
         View.OnClickListener bottomSheetClickListener = view -> {
+            boolean saved = homePresenter.isBookmarkSaved(item.getTitle());
             switch (view.getId()) {
                 case R.id.bottom_sheet_save:
-                    bottomsheet.dismissSheet();
-                    homePresenter.saveListItem(item);
-                    Snackbar.make(view,"Saved", Snackbar.LENGTH_LONG).show();
+                    if (saved) {
+                        saveBtn.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_heart_unselected_bottomsheet, 0, 0);
+                        homePresenter.deleteBookmark(item.getTitle());
+                    } else {
+                        saveBtn.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_heart_selected_bottomsheet, 0, 0);
+                        homePresenter.saveListItem(item);
+                    }
                     break;
                 case R.id.bottom_sheet_webview:
                     bottomsheet.dismissSheet();
@@ -222,16 +228,28 @@ public class FragmentHome extends Fragment implements FastAdapter.OnLongClickLis
         };
         bottomsheet.setPeekSheetTranslation(1200);
         bottomsheet.showWithSheetView(LayoutInflater.from(context).inflate(R.layout.bottomsheet_event_item, bottomsheet, false));
-        ImageView eventPic = (ImageView) bottomsheet.findViewById(R.id.bottom_sheet_event_logo);
-        Button saveBtn = (Button) bottomsheet.findViewById(R.id.bottom_sheet_save);
-        Button webviewBtn = (Button) bottomsheet.findViewById(R.id.bottom_sheet_webview);
-        Button applyButtn = (Button) bottomsheet.findViewById(R.id.bottom_sheet_apply);
 
+        eventPic = (ImageView) bottomsheet.findViewById(R.id.bottom_sheet_event_logo);
+        saveBtn = (Button) bottomsheet.findViewById(R.id.bottom_sheet_save);
+        webviewBtn = (Button) bottomsheet.findViewById(R.id.bottom_sheet_webview);
+        applyButtn = (Button) bottomsheet.findViewById(R.id.bottom_sheet_apply);
+
+        boolean isSaved = homePresenter.isBookmarkSaved(item.getTitle());
+
+        if (!isSaved) {
+            saveBtn.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_heart_unselected_bottomsheet, 0, 0);
+        } else {
+            saveBtn.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_heart_selected_bottomsheet, 0, 0);
+
+        }
         String logoLink = Utils.getPageIdFromUrl(item.getFacebookUrl());
-        Picasso.with(context)
-                .load(logoLink)
-                .placeholder(R.mipmap.ic_launcher)
-                .into(eventPic);
+        if (eventPic != null) {
+            Picasso.with(context)
+                    .load(logoLink)
+                    .placeholder(R.mipmap.ic_launcher)
+                    .into(eventPic);
+        }
+
         saveBtn.setOnClickListener(bottomSheetClickListener);
         webviewBtn.setOnClickListener(bottomSheetClickListener);
         applyButtn.setOnClickListener(bottomSheetClickListener);

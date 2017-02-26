@@ -1,4 +1,4 @@
-## HackList
+## ![HackList](https://github.com/EladKeyshawn/HackList/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
 This project demonstrates the usage of MVP pattern along with RxJava/Android and the Dagger 2 dependecy injection framework.
 
 HackList uses [HackalistAPI](http://www.hackalist.org/) to retrieve details about upcoming hackathons including filtering and search options. 
@@ -10,7 +10,7 @@ Inspired by:
 * __Dagger2__ - used to make the app more structural and its modules - more independent (weak connected). 
 * __RxJava/RxAndroid__ - used for multithreading.
 * __Realm__ - used for local data caching.
-* _FastAdapter_ - managing RecyclerViews adapters.
+* __FastAdapter__ - managing RecyclerViews adapters.
 ## Design Libraries
-* _FlipBoardBottomSheet
+* __FlipBoardBottomSheet__
 

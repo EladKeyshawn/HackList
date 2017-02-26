@@ -14,9 +14,9 @@ Inspired by:
 [Uncle Bob's Clean Architecture](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html) 
 
 
+<img width="200" heigth="800" src="https://github.com/EladKeyshawn/HackList/blob/master/screenshots/screenshot_2.png">
 
-![](https://github.com/EladKeyshawn/HackList/blob/master/screenshots/screenshot_2.png)
-![](https://github.com/EladKeyshawn/HackList/blob/master/screenshots/screenshot_1.png)
+
 
 
 

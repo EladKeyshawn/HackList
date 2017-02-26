@@ -28,10 +28,14 @@ Inspired by:
 ## Used libraries
 * __Dagger2__ - used to make the app more structural and its modules - more independent (weak connected). 
 * __RxJava/RxAndroid__ - used for multithreading.
-* __Realm__ - used for local data caching.
-* __FastAdapter__ - managing RecyclerViews adapters.
-## Design Libraries
+* __Retrofit__
+* __Picasso__
+* __Butterknife__
 
+* __Realm__ - used for local data caching.
+
+## Design Libraries
+* __FastAdapter__ - managing RecyclerViews adapters.
 * __FlipBoardBottomSheet__
 
 

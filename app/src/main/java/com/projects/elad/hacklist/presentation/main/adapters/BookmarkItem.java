@@ -75,4 +75,25 @@ public class BookmarkItem extends AbstractItem<BookmarkItem, BookmarkItem.ViewHo
     }
   }
 
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    if (!super.equals(o)) return false;
+
+    BookmarkItem that = (BookmarkItem) o;
+
+    if (!bookmarkTitle.equals(that.bookmarkTitle)) return false;
+    return eventFacebookUrl != null ? eventFacebookUrl.equals(that.eventFacebookUrl) : that.eventFacebookUrl == null;
+
+  }
+
+  @Override
+  public int hashCode() {
+    int result = super.hashCode();
+    result = 31 * result + bookmarkTitle.hashCode();
+    result = 31 * result + (eventFacebookUrl != null ? eventFacebookUrl.hashCode() : 0);
+    return result;
+  }
 }

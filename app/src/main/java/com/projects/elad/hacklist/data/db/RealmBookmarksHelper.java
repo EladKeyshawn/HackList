@@ -53,8 +53,8 @@ public class RealmBookmarksHelper {
             realm = Realm.getDefaultInstance();
 
             realm.executeTransaction(transactionRealm -> {
-                findInRealm(transactionRealm, title).deleteFromRealm();
-
+                BookmarkDbEntity bookmark = findInRealm(transactionRealm, title);
+                if (bookmark!=null) bookmark.deleteFromRealm();
             });
         } finally {
             realm.close();

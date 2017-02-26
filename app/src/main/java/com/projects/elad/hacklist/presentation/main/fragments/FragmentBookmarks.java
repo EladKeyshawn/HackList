@@ -3,7 +3,6 @@ package com.projects.elad.hacklist.presentation.main.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -12,17 +11,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.IItem;
-import com.mikepenz.fastadapter.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
 import com.projects.elad.hacklist.HacklistApplication;
 import com.projects.elad.hacklist.R;
-import com.projects.elad.hacklist.data.db.BookmarkDbEntity;
 import com.projects.elad.hacklist.presentation.main.BookmarksMvpView;
 import com.projects.elad.hacklist.presentation.main.BookmarksPresenter;
 import com.projects.elad.hacklist.presentation.main.adapters.BookmarkItem;
@@ -39,13 +36,13 @@ public class FragmentBookmarks extends Fragment implements FastAdapter.OnLongCli
 
     private FastAdapter fastAdapter;
     private ItemAdapter<BookmarkItem> itemFastAdapter;
-
+    private LinearLayout noBookmarksLayout;
     private RecyclerView bookmarksList;
     private FragmentActivity context;
     @Inject BookmarksPresenter bookmarksPresenter;
 
+
     public FragmentBookmarks() {
-        // Required empty public constructor
     }
 
 
@@ -63,7 +60,7 @@ public class FragmentBookmarks extends Fragment implements FastAdapter.OnLongCli
         context = super.getActivity();
         View ourView = inflater.inflate(R.layout.fragment_bookmarks, container, false);
 
-
+        noBookmarksLayout = (LinearLayout) ourView.findViewById(R.id.no_bookmarks_layout);
         bookmarksList = (RecyclerView) ourView.findViewById(R.id.bookmarks_list);
 
         fastAdapter = new FastAdapter();
@@ -90,16 +87,16 @@ public class FragmentBookmarks extends Fragment implements FastAdapter.OnLongCli
     }
 
 
-
-
     public void showBookmarks(List<BookmarkItem> items) {
+        noBookmarksLayout.setVisibility(View.GONE);
         itemFastAdapter.clear();
         itemFastAdapter.add(items);
     }
 
     @Override
     public void showEmpty() {
-
+        itemFastAdapter.clear();
+        noBookmarksLayout.setVisibility(View.VISIBLE);
     }
 
 
@@ -119,7 +116,6 @@ public class FragmentBookmarks extends Fragment implements FastAdapter.OnLongCli
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) { // fragment is visible so update bookmarks
-            bookmarksPresenter.refreshBookmarks();
             bookmarksPresenter.loadBookmarks();
         }
 
@@ -133,26 +129,15 @@ public class FragmentBookmarks extends Fragment implements FastAdapter.OnLongCli
     }
 
     private void openDeleteBookmarkDialog(final BookmarkItem bookmark) {
-        MaterialDialog.Builder dialog = new MaterialDialog.Builder(context)
+        new MaterialDialog.Builder(context)
                 .title("Delete bookmark")
                 .content("Are you sure you to delete this bookmark?")
                 .positiveText("delete")
                 .positiveColor(Color.RED)
                 .negativeText("cancel")
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        bookmarksPresenter.deleteBookmark(bookmark);
-                    }
-                })
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                .onPositive((dialog1, which) -> bookmarksPresenter.deleteBookmark(bookmark))
+                .show();
 
-                    }
-                });
-
-        dialog.show();
     }
 
 }

@@ -67,17 +67,17 @@ public class BookmarksPresenter extends BasePresenter<BookmarksMvpView> {
                     public void onNext(List<BookmarkItem> bookmarkItems) {
                         if (bookmarkItems.isEmpty()) {
                             getMvpView().showEmpty();
+                        } else {
+                            getMvpView().showBookmarks(bookmarkItems);
                         }
-                        getMvpView().showBookmarks(bookmarkItems);
                     }
                 });
     }
 
-    public void refreshBookmarks() {
-        loadBookmarks();
-    }
+
 
     public void deleteBookmark(BookmarkItem bookmark) {
         dataManager.deleteBookmark(bookmark.getBookmarkTitle());
+        loadBookmarks();
     }
 }

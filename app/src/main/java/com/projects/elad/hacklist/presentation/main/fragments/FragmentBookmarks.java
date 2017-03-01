@@ -18,11 +18,13 @@ import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.IItem;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
-import com.projects.elad.hacklist.HacklistApplication;
 import com.projects.elad.hacklist.R;
-import com.projects.elad.hacklist.presentation.views.BookmarksMvpView;
-import com.projects.elad.hacklist.presentation.presenters.BookmarksPresenter;
+import com.projects.elad.hacklist.injection.components.BookmarksFragmentComponent;
+import com.projects.elad.hacklist.injection.components.DaggerBookmarksFragmentComponent;
+import com.projects.elad.hacklist.injection.modules.BookmarksFragmentModule;
 import com.projects.elad.hacklist.presentation.main.adapters.BookmarkItem;
+import com.projects.elad.hacklist.presentation.presenters.BookmarksPresenter;
+import com.projects.elad.hacklist.presentation.views.BookmarksMvpView;
 
 import java.util.List;
 
@@ -50,9 +52,12 @@ public class FragmentBookmarks extends Fragment implements FastAdapter.OnLongCli
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        ((HacklistApplication) (getActivity().getApplication())).getComponent().inject(this);
+        getComponent().inject(this);
     }
 
+    BookmarksFragmentComponent getComponent() {
+        return DaggerBookmarksFragmentComponent.builder().bookmarksFragmentModule(new BookmarksFragmentModule()).build();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

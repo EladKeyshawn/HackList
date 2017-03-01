@@ -3,8 +3,8 @@ package com.projects.elad.hacklist;
 import android.app.Application;
 import android.content.Context;
 
-import com.projects.elad.hacklist.injection.components.BaseComponent;
-import com.projects.elad.hacklist.injection.components.DaggerBaseComponent;
+import com.projects.elad.hacklist.injection.components.AppComponent;
+import com.projects.elad.hacklist.injection.components.DaggerAppComponent;
 import com.projects.elad.hacklist.injection.modules.AppModule;
 
 
@@ -14,7 +14,7 @@ import com.projects.elad.hacklist.injection.modules.AppModule;
 
 public class HacklistApplication extends Application {
 
-    private BaseComponent baseComponent;
+    private AppComponent appComponent;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -24,19 +24,19 @@ public class HacklistApplication extends Application {
         return (HacklistApplication) context.getApplicationContext();
     }
 
-    public  BaseComponent getComponent() {
-        if (baseComponent == null) {
-            baseComponent = DaggerBaseComponent.builder()
+    public AppComponent getComponent() {
+        if (appComponent == null) {
+            appComponent = DaggerAppComponent.builder()
                     .appModule(new AppModule(this))
                     .build();
 
         }
-        return baseComponent;
+        return appComponent;
     }
 
     // Needed to replace the component with a test specific one
-    public void setComponent(BaseComponent baseComponent) {
-        this.baseComponent = baseComponent;
+    public void setComponent(AppComponent appComponent) {
+        this.appComponent = appComponent;
     }
 
 

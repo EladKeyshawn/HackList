@@ -1,9 +1,8 @@
 package com.projects.elad.hacklist.injection.modules;
 
 import com.projects.elad.hacklist.data.api.HacklistService;
+import com.projects.elad.hacklist.injection.scopes.HacklistApplicationScope;
 import com.projects.elad.hacklist.util.CurrDate;
-
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -20,13 +19,13 @@ public class NetModule {
     }
 
     @Provides
-    @Singleton
+    @HacklistApplicationScope
     public CurrDate provideCurrDate() {
         return currDate;
     }
 
     @Provides
-    @Singleton
+    @HacklistApplicationScope
     public HacklistService provideHacklistService(){
         return HacklistService.ServiceCreator.newHacklistService();
     }

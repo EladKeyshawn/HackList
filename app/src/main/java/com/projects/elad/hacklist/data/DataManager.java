@@ -8,7 +8,6 @@ import com.projects.elad.hacklist.util.CurrDate;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import rx.Observable;
 
@@ -16,7 +15,6 @@ import rx.Observable;
  * Created by EladKeyshawn on 24/02/2017.
  */
 
-@Singleton
 public class DataManager {
     private HacklistService hacklistService;
     private CurrDate date;

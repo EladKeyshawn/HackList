@@ -24,8 +24,10 @@ import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.IItem;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
-import com.projects.elad.hacklist.HacklistApplication;
 import com.projects.elad.hacklist.R;
+import com.projects.elad.hacklist.injection.components.DaggerHomeFragmentComponent;
+import com.projects.elad.hacklist.injection.components.HomeFragmentComponent;
+import com.projects.elad.hacklist.injection.modules.HomeFragmentModule;
 import com.projects.elad.hacklist.presentation.main.adapters.ListItem;
 import com.projects.elad.hacklist.presentation.presenters.HomePresenter;
 import com.projects.elad.hacklist.presentation.views.HomeMvpView;
@@ -87,9 +89,13 @@ public class FragmentHome extends Fragment implements FastAdapter.OnLongClickLis
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        ((HacklistApplication)(getActivity().getApplication())).getComponent().inject(this);
+
+        getComponent().inject(this);
     }
 
+    HomeFragmentComponent getComponent() {
+        return DaggerHomeFragmentComponent.builder().homeFragmentModule(new HomeFragmentModule()).build();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

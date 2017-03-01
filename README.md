@@ -1,4 +1,3 @@
-![builds](https://ci.appveyor.com/api/projects/status/github/webpack/webpack?svg=true)
 <div align="center">
   <a href="https://github.com/EladKeyshawn/HackList">
     <img width="200" heigth="200" src="https://github.com/EladKeyshawn/HackList/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png">
